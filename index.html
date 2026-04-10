@@ -17,23 +17,19 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Barlow',sans-serif;background:var(--g100);color:var(--g900);min-height:100vh}
 
-/* ── HEADER ── */
 header{background:var(--g900);color:var(--white);display:flex;align-items:stretch;border-bottom:4px solid var(--red)}
 .hbar{background:var(--red);width:9px;flex-shrink:0}
 .hcont{padding:15px 24px;display:flex;align-items:center;gap:14px}
 .hcont h1{font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
 .hcont p{font-size:.72rem;color:#bbb;margin-top:2px;letter-spacing:.06em;text-transform:uppercase}
 
-/* ── LAYOUT ── */
 .layout{display:grid;grid-template-columns:1fr 400px;gap:18px;padding:20px;max-width:1560px;margin:0 auto}
 @media(max-width:1000px){.layout{grid-template-columns:1fr}}
 
-/* ── CARD ── */
-.card{background:var(--white);border-radius:8px;box-shadow:var(--sh);overflow:hidden}
+.card{background:var(--white);border-radius:8px;box-shadow:var(--sh);overflow:hidden;margin-bottom:18px}
 .ch{background:var(--g900);color:var(--white);padding:11px 18px;font-family:'Barlow Condensed',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
 .cb{padding:18px}
 
-/* ── FIELDS ── */
 .frow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
 .fg label{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--g600);margin-bottom:5px}
 .fg input{width:100%;border:2px solid var(--g200);border-radius:5px;padding:9px 11px;font-family:'Barlow',sans-serif;font-size:.88rem;transition:border-color .15s;background:var(--white)}
@@ -42,70 +38,33 @@ header{background:var(--g900);color:var(--white);display:flex;align-items:stretc
 .dupmsg{display:none;font-size:.75rem;font-weight:600;color:var(--amber);margin-top:5px}
 .dupmsg.show{display:block}
 
-/* ── PRODUCT BUTTONS ── */
-.bwrap{display:flex;flex-wrap:wrap;gap:6px}
+.btn-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--g100)}
+.btn-row:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
 .pb{background:var(--g100);border:2px solid var(--g200);border-radius:5px;padding:5px 12px;font-family:'Barlow',sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .15s;color:var(--g700);white-space:nowrap;line-height:1.3}
 .pb:hover{border-color:var(--red);color:var(--red);background:var(--red-lt)}
 .pb.on{background:var(--red);border-color:var(--red-dk);color:var(--white);box-shadow:0 2px 6px rgba(200,16,46,.3)}
 
-/* ── EMAIL PREVIEW (full width, large) ── */
-.preview-full{margin-top:0}
 .pvbox{background:#fafafa;border:1px solid var(--g200);border-radius:6px;padding:18px 22px;font-size:.82rem;line-height:1.9;color:var(--g800);max-height:520px;overflow-y:auto;font-family:'Barlow',sans-serif;white-space:pre-wrap;word-break:break-word}
-.pvlabel{font-size:.69rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g400);margin-bottom:8px}
 
-/* ── SIDEBAR ── */
-.sidebar{display:flex;flex-direction:column;gap:18px}
-
-/* ── SELECTED LIST ── */
 .slist{list-style:none;max-height:220px;overflow-y:auto}
 .slist li{display:flex;align-items:flex-start;gap:7px;padding:6px 0;border-bottom:1px solid var(--g200);font-size:.79rem}
-.slist li:last-child{border-bottom:none}
-.slbl{font-weight:600;line-height:1.35;flex:1;min-width:0}
-.slbl a{color:var(--red);text-decoration:underline}
-.ssub{font-size:.69rem;color:var(--g400);margin-top:2px}
 .sx{flex-shrink:0;background:none;border:none;cursor:pointer;color:var(--g400);font-size:.85rem;padding:0 3px;transition:color .12s;margin-top:1px}
 .sx:hover{color:var(--red)}
-.emsg{color:var(--g400);font-size:.82rem;text-align:center;padding:16px 0;font-style:italic;display:block}
 
-/* ── GENERATE ── */
-.genbtn{display:block;width:100%;background:var(--red);color:var(--white);border:none;border-radius:7px;padding:16px;font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background .15s,transform .1s;box-shadow:0 4px 16px rgba(200,16,46,.3)}
-.genbtn:hover{background:var(--red-dk);transform:translateY(-1px)}
-.genbtn:active{transform:translateY(0)}
+.genbtn{display:block;width:100%;background:var(--red);color:var(--white);border:none;border-radius:7px;padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .15s}
+.genbtn:hover{background:var(--red-dk)}
 
-/* ── HISTORY ── */
 .hlist{list-style:none;max-height:200px;overflow-y:auto}
 .hlist li{display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid var(--g200);font-size:.78rem}
-.hlist li:last-child{border-bottom:none}
-.ho{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.86rem;color:var(--red);min-width:70px}
-.he{color:var(--g600);flex:1;word-break:break-all}
-.hd{color:var(--g400);font-size:.7rem;white-space:nowrap}
-.hdel{background:none;border:none;cursor:pointer;color:var(--g400);font-size:.82rem;padding:0 3px;transition:color .12s}
-.hdel:hover{color:var(--red)}
 
-/* ── MODAL ── */
+.editable-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.85rem}
+.editable-table th{background:var(--g900);color:white;text-align:left;padding:8px;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase}
+.editable-table td{border:1px solid var(--g200);padding:5px}
+.editable-table input{width:100%;border:none;padding:4px;font-family:inherit;font-size:inherit}
+
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:1000;align-items:center;justify-content:center}
 .overlay.open{display:flex}
-.modal{background:var(--white);border-radius:10px;box-shadow:var(--sh-lg);padding:32px;max-width:420px;width:90%;text-align:center}
-.micon{font-size:2.5rem;margin-bottom:10px}
-.modal h2{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;color:var(--amber);text-transform:uppercase;margin-bottom:8px}
-.modal p{font-size:.87rem;color:var(--g600);margin-bottom:24px;line-height:1.5}
-.mbtns{display:flex;gap:10px;justify-content:center}
-.mbtn{border:none;border-radius:6px;padding:10px 24px;font-family:'Barlow',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer}
-.mbtn:hover{opacity:.85}
-.mbtn.pri{background:var(--red);color:var(--white)}
-.mbtn.sec{background:var(--g200);color:var(--g700)}
-
-/* ── MISC ── */
-.clrbtn{background:none;border:1px solid var(--g200);border-radius:5px;padding:4px 11px;font-family:'Barlow',sans-serif;font-size:.74rem;font-weight:600;color:var(--g600);cursor:pointer;transition:all .15s}
-.clrbtn:hover{border-color:var(--red);color:var(--red)}
-.badge{background:var(--red);color:var(--white);border-radius:10px;padding:1px 8px;font-size:.74rem}
-::-webkit-scrollbar{width:5px;height:5px}
-::-webkit-scrollbar-track{background:var(--g100)}
-::-webkit-scrollbar-thumb{background:var(--g400);border-radius:3px}
-
-/* ── OUTLOOK NOTE ── */
-.outlook-note{background:var(--amber-lt);border:1px solid #d97706;border-radius:6px;padding:10px 14px;font-size:.76rem;color:var(--amber);margin-top:10px;line-height:1.5}
-.outlook-note strong{font-weight:700}
+.modal{background:var(--white);border-radius:10px;padding:32px;max-width:420px;width:90%;text-align:center}
 </style>
 </head>
 <body>
@@ -122,462 +81,204 @@ header{background:var(--g900);color:var(--white);display:flex;align-items:stretc
 </header>
 
 <div class="layout">
-
-  <div style="display:flex;flex-direction:column;gap:18px">
-
+  <div style="display:flex;flex-direction:column">
     <div class="card">
       <div class="ch">📋 Recipient Information</div>
       <div class="cb">
         <div class="frow">
-          <div class="fg">
-            <label>ORD Number</label>
-            <input id="ordNum" type="text" placeholder="e.g. ORD-12345" oninput="checkDup()">
-            <div class="dupmsg" id="dupMsg">⚠ Already sent for this ORD number</div>
+          <div class="fg"><label>ORD Number</label><input id="ordNum" type="text" oninput="checkDup()">
+            <div class="dupmsg" id="dupMsg">⚠ Already sent for this ORD</div>
           </div>
-          <div class="fg">
-            <label>Email Address</label>
-            <input id="emailAddr" type="email" placeholder="customer@example.com" oninput="refreshPreview()">
-          </div>
-          <div class="fg">
-            <label>Email Name (Greeting)</label>
-            <input id="emailName" type="text" placeholder="e.g. John" oninput="refreshPreview()">
-          </div>
+          <div class="fg"><label>Email Address</label><input id="emailAddr" type="email" oninput="refreshPreview()"></div>
+          <div class="fg"><label>Email Name</label><input id="emailName" type="text" oninput="refreshPreview()"></div>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <div class="ch">
-        🏷 Quick-Select by Product
-        <button class="clrbtn" style="margin-left:auto" onclick="clearSel()">Clear All</button>
-      </div>
-      <div class="cb">
-        <div class="bwrap" id="btnGrid"></div>
+      <div class="ch">🏷 Quick-Select by Product <button class="clrbtn" style="margin-left:auto; cursor:pointer" onclick="clearSel()">Clear All</button></div>
+      <div class="cb" id="btnContainer">
+        <div class="btn-row" id="row1"></div>
+        <div class="btn-row" id="row2"></div>
+        <div class="btn-row" id="row3"></div>
       </div>
     </div>
 
-    <div class="card preview-full">
+    <div class="card">
       <div class="ch">👁 Email Preview</div>
-      <div class="cb" style="padding:16px 20px">
-        <div class="pvlabel">Live preview — copy this text into Outlook (links will work after pasting)</div>
-        <div class="pvbox" id="preview">Fill in the fields above and select products to see a preview.</div>
-        <div class="outlook-note">
-          <strong>📧 Outlook note:</strong> The mailto button sends plain text. For bold &amp; clickable hyperlinks in Outlook, copy the preview text above, paste it into a new Outlook email, then manually bold the "Protip:" lines. The URLs will auto-hyperlink when pasted.
-        </div>
+      <div class="cb">
+        <div class="pvbox" id="preview"></div>
       </div>
     </div>
 
+    <div class="card">
+      <div class="ch">⚙ Manage Product Links</div>
+      <div class="cb" style="overflow-x:auto">
+        <table class="editable-table" id="linkTable">
+          <thead>
+            <tr><th>Product</th><th>Name</th><th>URL</th><th>Action</th></tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+        <button class="pb" style="margin-top:10px" onclick="addRow()">+ Add Row</button>
+      </div>
+    </div>
   </div>
 
   <div class="sidebar">
-
     <div class="card">
-      <div class="ch">
-        ✅ Selected Links
-        <span class="badge" id="selBadge" style="margin-left:auto">0</span>
-      </div>
-      <div class="cb" style="padding:12px 16px">
-        <ul class="slist" id="selList"><li><span class="emsg">No links selected yet</span></li></ul>
-      </div>
+      <div class="ch">✅ Selected Links <span class="badge" id="selBadge" style="margin-left:auto">0</span></div>
+      <div class="cb"><ul class="slist" id="selList"></ul></div>
     </div>
 
     <div class="card">
-      <div class="ch">📧 Generate</div>
+      <div class="ch">📧 Action</div>
       <div class="cb">
-        <button class="genbtn" onclick="generate()">⚡ Generate &amp; Open in Mail</button>
-        <p style="font-size:.72rem;color:var(--g400);margin-top:9px;text-align:center;line-height:1.4">Opens your default email client with the prepared letter</p>
+        <button class="genbtn" onclick="generate()">Generate Email</button>
       </div>
     </div>
 
-    <div class="card" style="flex:1">
-      <div class="ch">
-        🕐 Sent History
-        <button class="clrbtn" style="margin-left:auto" onclick="clearHist()">Clear All</button>
-      </div>
-      <div class="cb" style="padding:12px 16px">
-        <ul class="hlist" id="histList"></ul>
-      </div>
+    <div class="card">
+      <div class="ch">🕐 Sent History <button class="clrbtn" style="margin-left:auto; cursor:pointer" onclick="clearHist()">Clear</button></div>
+      <div class="cb"><ul class="hlist" id="histList"></ul></div>
     </div>
-
   </div>
 </div>
 
 <div class="overlay" id="dupModal">
   <div class="modal">
-    <div class="micon">⚠️</div>
-    <h2>ORD Number Already Sent</h2>
-    <p id="dupModalMsg">This ORD number has a record in the sent history. Would you like to send it again anyway?</p>
-    <div class="mbtns">
-      <button class="mbtn pri" onclick="doGenerate()">Send Anyway</button>
-      <button class="mbtn sec" onclick="closeModal()">Cancel</button>
-    </div>
+    <h2>Already Sent</h2>
+    <p id="dupModalMsg"></p>
+    <button class="genbtn" onclick="doGenerate()">Send Anyway</button>
+    <button class="pb" onclick="closeModal()">Cancel</button>
   </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-//  SOURCE DATA — from 4-10-26 Product Preparation Links.xlsx
-// ═══════════════════════════════════════════════════════════
-const SRC = [
+let rows = [
   {product:"NCR", name:"NCR: BinDisc Setup Guide", url:"https://bmtchspprt.github.io/radar-setup/bindisc.html"},
   {product:"NCR", name:"NCR Manual", url:"https://support.binmaster.com/kb/view/bc8e6a67-a401-4bc6-aa83-3423a0282860"},
-  {product:"NCR", name:"NCR Wiring", url:"https://support.binmaster.com/kb/view/a5d3b4e0-a336-43f4-94f4-962eeef7d7af"},
-  {product:"NCR", name:"NCR-86 Material Calibration Video", url:"https://support.binmaster.com/kb/view/902c7769-9671-45ab-a52c-6ada011925ec"},
   {product:"CNCR", name:"CNCR Manual", url:"https://support.binmaster.com/kb/view/d71297d9-77ac-49f8-97a4-6d183bf3adbc"},
-  {product:"CNCR", name:"CNCR Wiring", url:"https://support.binmaster.com/kb/view/9ab4c1b8-9795-4e4a-90a7-192da74a5729"},
-  {product:"CNCR", name:"CNCR: Bluetooth Setup Guide", url:"https://support.binmaster.com/kb/view/a0e315ac-84e8-49a7-823e-b263d44a3017"},
   {product:"SmartBob", name:"SmartBob Manual", url:"https://support.binmaster.com/kb/view/c63c227b-5e08-4171-8c7f-58a804e3f06a"},
-  {product:"SmartBob", name:"SmartBob Wiring", url:"https://support.binmaster.com/kb/view/3ae8f673-3dfd-466f-b9fd-2e814996426a"},
-  {product:"Senix", name:"Senix Toughsonic Manual", url:"https://support.binmaster.com/kb/view/376df1e4-4906-4f01-b9e6-c4e8e0943da0"},
-  {product:"Senix", name:"Senix Videos", url:"https://support.binmaster.com/kb/view/92f66ca8-5cfd-4ad5-ba42-8bd67a5406db"},
   {product:"3D", name:"3D Manual", url:"https://support.binmaster.com/kb/view/7d8bee17-d629-4075-a18b-7e0725f4b52a"},
-  {product:"3D", name:"3D Wiring", url:"https://support.binmaster.com/kb/view/70cbec26-fa02-4934-a95c-593cf5092229"},
-  {product:"3D", name:"3D extension installation: videos and manuals", url:"https://support.binmaster.com/kb/view/70cbec26-fa02-4934-a95c-593cf5092229"},
-  {product:"3D", name:"3D Downloads", url:"https://support.binmaster.com/kb/view/bb6f64b8-6c24-4077-b93e-48cf8ec60767"},
-  {product:"GWR", name:"Guided Wave Radar Manuals", url:"https://support.binmaster.com/kb/view/e29fbc11-0526-4ff9-9c76-da324a5a9ca3"},
-  {product:"GWR", name:"Guided Wave Radar Wiring", url:"https://support.binmaster.com/kb/view/baa0c650-0575-4b4f-a0dc-86911ca25a66"},
-  {product:"Rotary", name:"BMRX Rotary Manual", url:"https://support.binmaster.com/kb/view/66e6b142-438c-4f2f-85c2-bda53cba000f"},
-  {product:"Rotary", name:"Rotary Wiring", url:"https://support.binmaster.com/kb/view/809dda8f-1de8-44ae-af07-fe2865c03113"},
-  {product:"Capacitance Probe", name:"Capacitance Probe Manual", url:"https://support.binmaster.com/kb/view/4895275b-1f7c-4b28-8fec-925faa017f46"},
-  {product:"Capacitance Probe", name:"Procap Probe Adjustments Video", url:"https://support.binmaster.com/kb/view/c67bbd67-e00b-46ef-9f72-38a83856a103"},
-  {product:"Vibrating Probe", name:"Vibrating Rod Manual", url:"https://support.binmaster.com/kb/view/bd8af8e0-e43b-4771-bd52-52b8748f7c96"},
-  {product:"Diaphragm", name:"Diaphragm Switch Manual", url:"https://support.binmaster.com/kb/view/9cf52a34-53ce-469c-8d0f-adffd00ab0c4"},
-  {product:"Tilt Switch", name:"Tilt Switch Manual", url:"https://support.binmaster.com/kb/view/b9b5eac2-8ab5-4379-91cb-d753cc51927a"},
-  {product:"C100", name:"C-100 Manual", url:"https://support.binmaster.com/kb/view/811e6e4d-81ec-4906-be46-981773c71a69"},
-  {product:"C100", name:"C-100 Setup Guide", url:"https://binmastercody.github.io/c100/"},
-  {product:"C-50", name:"C-50 Manual", url:"https://binmaster.com/amfile/file/download/file/1253/product/4260/"},
-  {product:"DPM", name:"DPM Manual", url:"https://support.binmaster.com/kb/view/717dead8-a1c3-4518-8238-857ecac445e3"},
-  {product:"DPM", name:"DPM-100 Modbus Quick Start Guide", url:"https://binmaster.com/amfile/file/download/file/1049/product/4799/"},
-  {product:"LTR-100", name:"LTR-100 Manual", url:"https://support.binmaster.com/kb/view/d33f37bb-9332-420a-869f-8f30113caf49"},
-  {product:"LTR-100", name:"LTR Addressing", url:"https://support.binmaster.com/kb/view/7201c8aa-0bb0-480d-9400-1c12389dcdbc"},
-  {product:"BinCloud, Gateway", name:"Form Vessel Setup", url:"https://support.binmaster.com/kb/view/d65c70fd-45a6-4720-9db6-de9f61348bae"},
-  {product:"BinCloud, Gateway", name:"Firewall Details", url:"https://support.binmaster.com/kb/view/6eba9a1b-a15f-4ef6-b96b-c50478438d5d"},
-  {product:"Binventory, Ebob", name:"Binventory Install, Upgrade, Move", url:"https://support.binmaster.com/kb/view/5d310bc3-e081-4124-a491-57b62a079870"},
-  {product:"FD-2000", name:"Flow Detect Manual", url:"https://binmaster.com/amfile/file/download/file/1151/product/4230/"},
-  {product:"Airbrator", name:"Airpad, Airbrator Manuals", url:"https://support.binmaster.com/kb/view/b5fefb58-7dd4-463b-9f32-3adaa07b5d3b"}
+  {product:"C100", name:"C-100 Setup Guide", url:"https://binmastercody.github.io/c100/"}
+].map((d,i)=>({id:i,...d}));
+
+const layoutRows = [
+  ["NCR", "CNCR", "3D", "SmartBob", "Senix", "GWR"],
+  ["BinCloud", "Binventory", "Gateway", "LTX", "C100", "C50", "DPM", "LTR100"],
+  ["Rotary", "Vibrating Probe", "FD-2000", "Diaphragm", "Capacitance Probe", "Airbrator"]
 ];
 
-// ═══════════════════════════════════════════════════════════
-//  PRODUCT-SPECIFIC PROTIPS
-//  Key = product button label (must match SRC product values)
-// ═══════════════════════════════════════════════════════════
-const PROTIPS = {
-  "NCR": [
-    "Keep the yellow BinDisc sheet and complete setup BEFORE installing on the bin. Bluetooth signals get lost inside metal vessels.",
-    "Water and radars do not mix. Inspect all seals and anticipate water intrusion through conduits — ask your installer to double-check.",
-    "Vessel height and bulk density settings are critical to accurate readings. Do not shortcut those measurements!"
-  ],
-  "CNCR": [
-    "Complete Bluetooth setup before mounting on the bin — signals do not penetrate metal vessels well after installation.",
-    "Water and radars do not mix. Verify all seals and conduit entries for potential water intrusion.",
-    "Vessel dimensions and bulk density settings drive software accuracy. Measure carefully!"
-  ],
-  "SmartBob": [
-    "Keep the cable clean and free of kinks — a damaged cable is the #1 cause of inaccurate measurements.",
-    "Run a test drop in open air before installing to confirm the unit responds correctly to control commands.",
-    "If using an air purge, confirm PSI is within spec before sealing the unit inside the bin."
-  ],
-  "Senix": [
-    "Mount the Senix sensor so the beam is perpendicular to the material surface for best accuracy.",
-    "Use SenixVIEW software to verify the echo signal before finalizing installation.",
-    "Avoid mounting near bin fill points — dust and material movement can cause false readings."
-  ],
-  "3D": [
-    "The 3D Scanner requires careful vessel dimension entry — height, cone angle, and diameter all affect accuracy.",
-    "Allow the unit to run several measurement cycles before judging accuracy after installation.",
-    "Extension cables must be properly shielded; ground loops are a common issue with 3D installations."
-  ],
-  "GWR": [
-    "Keep the probe rod or cable away from the bin wall and fill stream to prevent false echoes.",
-    "Guided Wave Radar is sensitive to heavy material coating — check probe cleaning intervals for your material.",
-    "Verify the probe length matches the vessel depth at time of order."
-  ],
-  "BinCloud, Gateway": [
-    "Have your IT Dept whitelist the BinCloud firewall ports BEFORE the installer arrives — this prevents the most common commissioning delays.",
-    "Fill out the vessel setup form completely; missing data (dimensions, material) delays BinCloud configuration.",
-    "Gateways require a stable internet connection. Confirm your network location before mounting."
-  ],
-  "Binventory, Ebob": [
-    "Install Binventory on a dedicated machine if possible — antivirus and Windows updates have caused communication issues on shared PCs.",
-    "Record your COM port assignments during initial setup; they will be needed after any PC restart."
-  ],
-  "DEFAULT": [
-    "Keep the yellow sheet and do your setup before installing. Trying to Bluetooth after installation can be tough as signals get lost inside of vessels.",
-    "Water and radars do not mix. Check your seals. Anticipate water intrusion from conduits. Ask your installer to double check.",
-    "Vessel dimensions and bulk density settings are key to good software results. Don't shortcut those measurements!"
-  ]
-};
-
-// ═══════════════════════════════════════════════════════════
-//  STATE
-// ═══════════════════════════════════════════════════════════
-let rows = SRC.map((d,i)=>({id:i,...d}));
-let nextId = rows.length;
 let sel = new Set();
-let history = [];
-try { history = JSON.parse(localStorage.getItem('bm_hist')||'[]'); } catch(e){}
+let history = JSON.parse(localStorage.getItem('bm_hist')||'[]');
 
-// ═══════════════════════════════════════════════════════════
-//  HELPERS
-// ═══════════════════════════════════════════════════════════
-function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
-
-// Unique product tokens from all rows
-function uniqueProds(){
-  const seen=new Set(), out=[];
-  rows.forEach(r=>{
-    r.product.split(',').map(p=>p.trim()).filter(Boolean).forEach(p=>{
-      if(!seen.has(p)){seen.add(p);out.push(p);}
-    });
-  });
-  return out.sort((a,b)=>a.localeCompare(b));
-}
-
-// Which product buttons are currently ON
-function activeProducts(){
-  return [...document.querySelectorAll('.pb.on')].map(b=>b.dataset.p);
-}
-
-// Build protip list from selected products (deduplicated)
-function buildProtips(){
-  const prods = activeProducts();
-  if(!prods.length) return PROTIPS["DEFAULT"];
-  let tips = [];
-  const seen = new Set();
-  prods.forEach(p=>{
-    const list = PROTIPS[p] || PROTIPS["DEFAULT"];
-    list.forEach(t=>{ if(!seen.has(t)){seen.add(t);tips.push(t);} });
-  });
-  // Cap at 4 tips to keep email reasonable
-  return tips.slice(0,4);
-}
-
-// HTML preview line
-function htmlLine(row){
-  return `<a href="${esc(row.url)}" target="_blank">${esc(row.name)}</a> <span style="color:var(--g600);font-size:.75em">(${esc(row.product)})</span>`;
-}
-
-// Plain line for mailto
-function plainLine(row){
-  return `${row.name}: ${row.url}`;
-}
-
-// ═══════════════════════════════════════════════════════════
-//  PRODUCT BUTTONS
-// ═══════════════════════════════════════════════════════════
 function renderBtns(){
-  const g=document.getElementById('btnGrid'); g.innerHTML='';
-  uniqueProds().forEach(p=>{
-    const b=document.createElement('button');
-    b.className='pb'; b.textContent=p; b.dataset.p=p;
-    b.onclick=()=>toggleProd(p);
-    g.appendChild(b);
+  layoutRows.forEach((row, i) => {
+    const container = document.getElementById(`row${i+1}`);
+    container.innerHTML = '';
+    row.forEach(p => {
+      const b = document.createElement('button');
+      b.className = 'pb'; b.textContent = p; b.dataset.p = p;
+      b.onclick = () => toggleProd(p);
+      container.appendChild(b);
+    });
   });
   syncBtns();
 }
 
 function toggleProd(p){
-  const ids=rows.filter(r=>r.product.split(',').map(x=>x.trim()).includes(p)).map(r=>r.id);
-  const allOn=ids.every(id=>sel.has(id));
-  ids.forEach(id=>allOn?sel.delete(id):sel.add(id));
+  const ids = rows.filter(r => r.product === p).map(r => r.id);
+  const allOn = ids.length > 0 && ids.every(id => sel.has(id));
+  ids.forEach(id => allOn ? sel.delete(id) : sel.add(id));
   syncBtns(); renderSel(); refreshPreview();
 }
 
 function syncBtns(){
-  document.querySelectorAll('.pb').forEach(b=>{
-    const ids=rows.filter(r=>r.product.split(',').map(x=>x.trim()).includes(b.dataset.p)).map(r=>r.id);
-    b.classList.toggle('on',ids.length>0&&ids.every(id=>sel.has(id)));
+  document.querySelectorAll('.pb[data-p]').forEach(b => {
+    const p = b.dataset.p;
+    const ids = rows.filter(r => r.product === p).map(r => r.id);
+    b.classList.toggle('on', ids.length > 0 && ids.every(id => sel.has(id)));
   });
 }
 
-function clearSel(){
-  sel.clear(); syncBtns(); renderSel(); refreshPreview();
+function renderTable(){
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = rows.map(r => `
+    <tr>
+      <td><input value="${r.product}" onchange="updateRow(${r.id}, 'product', this.value)"></td>
+      <td><input value="${r.name}" onchange="updateRow(${r.id}, 'name', this.value)"></td>
+      <td><input value="${r.url}" onchange="updateRow(${r.id}, 'url', this.value)"></td>
+      <td><button class="sx" onclick="deleteRow(${r.id})">✕</button></td>
+    </tr>`).join('');
 }
 
-// ═══════════════════════════════════════════════════════════
-//  SELECTED LIST (sidebar)
-// ═══════════════════════════════════════════════════════════
-function renderSel(){
-  const ul=document.getElementById('selList');
-  const items=rows.filter(r=>sel.has(r.id));
-  document.getElementById('selBadge').textContent=items.length;
-  if(!items.length){
-    ul.innerHTML='<li><span class="emsg">No links selected yet</span></li>'; return;
-  }
-  ul.innerHTML=items.map(r=>`
-    <li>
-      <div style="flex:1;min-width:0">
-        <div class="slbl"><a href="${esc(r.url)}" target="_blank">${esc(r.name)}</a></div>
-        <div class="ssub">${esc(r.product)}</div>
-      </div>
-      <button class="sx" onclick="removeRow(${r.id})" title="Remove">✕</button>
-    </li>`).join('');
+function updateRow(id, field, val){
+  const r = rows.find(x => x.id === id);
+  if(r) r[field] = val;
+  refreshPreview();
 }
 
-function removeRow(id){
+function addRow(){
+  const newId = rows.length ? Math.max(...rows.map(r=>r.id)) + 1 : 0;
+  rows.push({id: newId, product:"", name:"", url:""});
+  renderTable();
+}
+
+function deleteRow(id){
+  rows = rows.filter(r => r.id !== id);
   sel.delete(id);
-  // un-check the corresponding product buttons if needed
-  syncBtns(); renderSel(); refreshPreview();
+  renderTable(); renderSel(); syncBtns(); refreshPreview();
 }
 
-// ═══════════════════════════════════════════════════════════
-//  EMAIL PREVIEW
-// ═══════════════════════════════════════════════════════════
+function renderSel(){
+  const ul = document.getElementById('selList');
+  const items = rows.filter(r => sel.has(r.id));
+  document.getElementById('selBadge').textContent = items.length;
+  ul.innerHTML = items.map(r => `<li><span style="flex:1">> ${r.name}</span><button class="sx" onclick="removeSel(${r.id})">✕</button></li>`).join('');
+}
+
+function removeSel(id){ sel.delete(id); syncBtns(); renderSel(); refreshPreview(); }
+
 function refreshPreview(){
-  const email = document.getElementById('emailAddr').value.trim();
-  const name  = document.getElementById('emailName').value.trim();
-  const items = rows.filter(r=>sel.has(r.id));
-  const prods = activeProducts().join('  ');
-  const tips  = buildProtips();
-
-  const linkLines = items.length
-    ? items.map(r=>`  ${htmlLine(r)}`).join('\n')
-    : '  <em style="color:var(--g400)">[no links selected]</em>';
-
-  const tipLines = tips.map(t=>`💡 <strong>Protip:</strong> ${esc(t)}`).join('\n');
-
-  document.getElementById('preview').innerHTML = [
-    `<strong>To:</strong> ${esc(email)||'[email address]'}`,
-    `<strong>Products:</strong> ${esc(prods)||'[none selected]'}`,
-    '',
-    `Hi ${esc(name)||'[name]'},`,
-    '',
-    'Thanks again for choosing BinMaster for your state-of-the-art level measurement system. Looking ahead to your system, we figure you could use some resources.',
-    '',
-    linkLines,
-    '',
-    tipLines,
-    '',
-    'Remember to bookmark <a href="https://support.binmaster.com/" target="_blank">https://support.binmaster.com/</a> if you need to chat, search our knowledge base, or contact BinMaster Tech.',
-    '',
-    'BinMaster Technical Support',
-    'https://www.binmaster.com',
-    '402-434-9102',
-    '3435 Schworer Dr',
-    'Lincoln, NE 68504'
-  ].join('\n');
+  const name = document.getElementById('emailName').value || '[Name]';
+  const items = rows.filter(r => sel.has(r.id));
+  const linkHtml = items.map(r => `> <a href="${r.url}">${r.name}</a>`).join('\n');
+  
+  document.getElementById('preview').innerHTML = `Hi ${name},\n\nThanks for choosing BinMaster. Here are the resources for your system:\n\n${linkHtml}\n\nBinMaster Technical Support`;
 }
 
-// ═══════════════════════════════════════════════════════════
-//  GENERATE / MAILTO
-// ═══════════════════════════════════════════════════════════
 function generate(){
-  const ord   = document.getElementById('ordNum').value.trim();
-  const email = document.getElementById('emailAddr').value.trim();
-  const name  = document.getElementById('emailName').value.trim();
-  if(!ord||!email||!name){ alert('Please fill in ORD Number, Email Address, and Email Name.'); return; }
-  if(!email.includes('@')){ alert('Please enter a valid email address.'); return; }
-  if(sel.size===0){ alert('Please select at least one product link.'); return; }
-
-  const dup = history.some(h=>h.ord.toLowerCase()===ord.toLowerCase());
-  if(dup){
-    const prev = history.find(h=>h.ord.toLowerCase()===ord.toLowerCase());
-    document.getElementById('dupModalMsg').textContent =
-      `ORD Number "${ord}" was previously sent on ${prev.date}. Send again?`;
+  const ord = document.getElementById('ordNum').value;
+  if(history.some(h => h.ord === ord)) {
+    document.getElementById('dupModalMsg').textContent = `ORD ${ord} was already sent.`;
     document.getElementById('dupModal').classList.add('open');
-    return;
-  }
-  doGenerate();
+  } else { doGenerate(); }
 }
 
 function doGenerate(){
   closeModal();
-  const ord   = document.getElementById('ordNum').value.trim();
-  const email = document.getElementById('emailAddr').value.trim();
-  const name  = document.getElementById('emailName').value.trim();
-  const items = rows.filter(r=>sel.has(r.id));
-  const prods = activeProducts().join('  ');
-  const tips  = buildProtips();
-
-  const subject = `BinMaster Preparation ${ord}`;
-
-  const linkLines = items.map(r=>plainLine(r)).join('\r\n');
-  const tipLines  = tips.map(t=>`Protip: ${t}`).join('\r\n');
-
-  const body = [
-    email,
-    prods,
-    '',
-    `Hi ${name},`,
-    '',
-    'Thanks again for choosing BinMaster for your state-of-the-art level measurement system. Looking ahead to your system, we figure you could use some resources.',
-    '',
-    linkLines,
-    '',
-    tipLines,
-    '',
-    'Remember to bookmark https://support.binmaster.com/ if you need to chat, search our knowledge base, or contact BinMaster Tech.',
-    '',
-    'BinMaster Technical Support',
-    'https://www.binmaster.com',
-    '402-434-9102',
-    '3435 Schworer Dr',
-    'Lincoln, NE 68504'
-  ].join('\r\n');
-
-  window.location.href = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-  const now  = new Date();
-  const date = now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-  history.push({ord,email,date});
-  try { localStorage.setItem('bm_hist',JSON.stringify(history)); } catch(e){}
-  renderHist(); checkDup();
-}
-
-function closeModal(){ document.getElementById('dupModal').classList.remove('open'); }
-
-// ═══════════════════════════════════════════════════════════
-//  DUPLICATE CHECK
-// ═══════════════════════════════════════════════════════════
-function checkDup(){
-  const ord = document.getElementById('ordNum').value.trim();
-  const dup = ord && history.some(h=>h.ord.toLowerCase()===ord.toLowerCase());
-  document.getElementById('ordNum').classList.toggle('warn',dup);
-  document.getElementById('dupMsg').classList.toggle('show',dup);
-  refreshPreview();
-}
-
-// ═══════════════════════════════════════════════════════════
-//  HISTORY
-// ═══════════════════════════════════════════════════════════
-function renderHist(){
-  const ul = document.getElementById('histList');
-  if(!history.length){
-    ul.innerHTML='<li><span class="emsg" style="color:var(--g400);font-style:italic;font-size:.82rem;text-align:center;display:block;padding:14px 0">No emails sent yet</span></li>';
-    return;
-  }
-  ul.innerHTML = history.slice().reverse().map((h,ri)=>{
-    const i = history.length-1-ri;
-    return `<li>
-      <span class="ho">${esc(h.ord)}</span>
-      <span class="he">${esc(h.email)}</span>
-      <span class="hd">${esc(h.date)}</span>
-      <button class="hdel" onclick="delHist(${i})" title="Remove">✕</button>
-    </li>`;
-  }).join('');
-}
-
-function delHist(i){
-  history.splice(i,1);
-  try { localStorage.setItem('bm_hist',JSON.stringify(history)); } catch(e){}
+  const ord = document.getElementById('ordNum').value;
+  const email = document.getElementById('emailAddr').value;
+  const name = document.getElementById('emailName').value;
+  const items = rows.filter(r => sel.has(r.id));
+  const body = `Hi ${name},\n\nResources:\n${items.map(r=>`> ${r.name}: ${r.url}`).join('\n')}`;
+  
+  window.location.href = `mailto:${email}?subject=BinMaster Prep ${ord}&body=${encodeURIComponent(body)}`;
+  history.push({ord, email, date: new Date().toLocaleDateString()});
+  localStorage.setItem('bm_hist', JSON.stringify(history));
   renderHist();
 }
 
-function clearHist(){
-  if(confirm('Clear all sent history?')){
-    history=[];
-    try { localStorage.setItem('bm_hist','[]'); } catch(e){}
-    renderHist();
-  }
+function closeModal(){ document.getElementById('dupModal').classList.remove('open'); }
+function clearSel(){ sel.clear(); syncBtns(); renderSel(); refreshPreview(); }
+function clearHist(){ history=[]; localStorage.setItem('bm_hist', '[]'); renderHist(); }
+
+function renderHist(){
+  document.getElementById('histList').innerHTML = history.map(h => `<li><b>${h.ord}</b>: ${h.email}</li>`).join('');
 }
 
-// ═══════════════════════════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════════════════════════
-renderBtns();
-renderSel();
-renderHist();
-refreshPreview();
+renderBtns(); renderTable(); renderSel(); renderHist(); refreshPreview();
 </script>
 </body>
 </html>
