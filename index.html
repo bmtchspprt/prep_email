@@ -37,7 +37,21 @@ header{background:var(--g900);color:var(--white);display:flex;align-items:stretc
 .pb{background:var(--g100);border:2px solid var(--g200);border-radius:5px;padding:5px 12px;font-family:'Barlow',sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .15s;color:var(--g700);white-space:nowrap;line-height:1.3}
 .pb:hover{border-color:var(--red);color:var(--red);background:var(--red-lt)}
 .pb.on{background:var(--red);border-color:var(--red-dk);color:var(--white);box-shadow:0 2px 6px rgba(200,16,46,.3)}
-.pvbox{background:#fafafa;border:1px solid var(--g200);border-radius:6px;padding:18px 22px;font-size:.82rem;line-height:1.75;color:var(--g800);max-height:560px;overflow-y:auto;font-family:'Barlow',sans-serif;white-space:pre-wrap;word-break:break-word}
+.pvbox{
+  background:#fafafa;
+  border:1px solid var(--g200);
+  border-radius:6px;
+  padding:18px 22px;
+  font-size:.82rem;
+  line-height:1.7;
+  color:var(--g800);
+  max-height:560px;
+  overflow-y:auto;
+  font-family:'Courier New', Courier, monospace;
+  white-space:pre;
+  word-break:break-all;
+  overflow-x:auto;
+}
 .pvlabel{font-size:.69rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g400);margin-bottom:8px}
 .sidebar{display:flex;flex-direction:column;gap:18px}
 .slist{list-style:none;max-height:260px;overflow-y:auto}
@@ -136,11 +150,10 @@ header{background:var(--g900);color:var(--white);display:flex;align-items:stretc
       </div>
     </div>
 
-    <!-- Email Preview -->
+    <!-- Email Preview — plain text -->
     <div class="card">
-      <div class="ch">👁 Email Preview</div>
+      <div class="ch">👁 Email Preview <span style="font-weight:400;font-size:.75rem;opacity:.6;text-transform:none;letter-spacing:0">(plain text — exactly what will be sent)</span></div>
       <div class="cb" style="padding:16px 20px">
-        <div class="pvlabel">Live preview — updates as you select products and fill in fields</div>
         <div class="pvbox" id="preview">Fill in the fields above and select products to see a preview.</div>
       </div>
     </div>
@@ -291,8 +304,6 @@ let sel = new Set();
 let history = [];
 try { history = JSON.parse(localStorage.getItem('bm_hist') || '[]'); } catch(e){}
 
-function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
 function rowsForProduct(p){
   return rows
     .filter(r => r.product.trim().split(',').map(x=>x.trim()).includes(p))
@@ -309,6 +320,35 @@ function buildProtips(){
     (PROTIPS[p] || []).forEach(t => { if(!seen.has(t)){ seen.add(t); tips.push(t); } });
   });
   return tips;
+}
+
+// Plain text link lines — one per line, no blank lines between groups
+function buildLinkLines(){
+  const items = rows.filter(r => sel.has(r.id));
+  if(!items.length) return '[no links selected]';
+  return items.map(r => `  > ${r.name}: ${r.url}`).join('\n');
+}
+
+// Single function builds the full body with configurable line ending
+function buildBody(le){
+  const template = document.getElementById('emailTemplate').value;
+  const name     = document.getElementById('emailName').value.trim();
+  const ord      = document.getElementById('ordNum').value.trim();
+  const email    = document.getElementById('emailAddr').value.trim();
+  const prods    = activeProducts().join(', ');
+  const tips     = buildProtips();
+  const linkLines  = buildLinkLines().replace(/\n/g, le);
+  const protipText = tips.length
+    ? tips.map(t => `Protip: ${t}`).join(le + le)
+    : '';
+  return template
+    .replace(/\[Name\]/g,          name  || '[Name]')
+    .replace(/\[ORD Number\]/g,    ord   || '[ORD Number]')
+    .replace(/\[email\]/g,         email || '[email]')
+    .replace(/\[products\]/g,      prods || '[products]')
+    .replace(/\[product links\]/g, linkLines)
+    .replace(/\[protips\]/g,       protipText)
+    .replace(/\n/g, le);
 }
 
 function renderBtns(){
@@ -380,8 +420,8 @@ function renderSel(){
   ul.innerHTML = items.map(r => `
     <li>
       <div style="flex:1;min-width:0">
-        <div class="slbl"><a href="${esc(r.url)}" target="_blank">${esc(r.name)}</a></div>
-        <div class="ssub">${esc(r.product)}</div>
+        <div class="slbl"><a href="${r.url}" target="_blank">${r.name}</a></div>
+        <div class="ssub">${r.product}</div>
       </div>
       <button class="sx" onclick="deselRow(${r.id})" title="Remove">✕</button>
     </li>`).join('');
@@ -410,49 +450,9 @@ function insertToken(token){
   refreshPreview();
 }
 
-function buildLinkLinesHtml(){
-  const items = rows.filter(r => sel.has(r.id));
-  if(!items.length) return '<em style="color:var(--g400)">[no links selected]</em>';
-  const groups = [], seen = new Set();
-  items.forEach(r => { if(!seen.has(r.product)){ seen.add(r.product); groups.push(r.product); } });
-  return groups.map(prod => {
-    return items.filter(r => r.product === prod)
-      .map(r => `  &gt; <a href="${esc(r.url)}" target="_blank">${esc(r.name)}</a>`)
-      .join('\n');
-  }).join('\n\n');
-}
-
-function buildLinkLinesPlain(){
-  const items = rows.filter(r => sel.has(r.id));
-  if(!items.length) return '[no links selected]';
-  const groups = [], seen = new Set();
-  items.forEach(r => { if(!seen.has(r.product)){ seen.add(r.product); groups.push(r.product); } });
-  return groups.map(prod => {
-    return items.filter(r => r.product === prod)
-      .map(r => `  > ${r.name}: ${r.url}`)
-      .join('\r\n');
-  }).join('\r\n\r\n');
-}
-
+// Preview: plain text via textContent — no HTML interpretation at all
 function refreshPreview(){
-  const email    = document.getElementById('emailAddr').value.trim();
-  const name     = document.getElementById('emailName').value.trim();
-  const ord      = document.getElementById('ordNum').value.trim();
-  const template = document.getElementById('emailTemplate').value;
-  const prods    = activeProducts().join(', ');
-  const tips     = buildProtips();
-  const linkLinesHtml = buildLinkLinesHtml();
-  const protipHtml = tips.length
-    ? tips.map(t => `💡 <strong>Protip:</strong> ${esc(t)}`).join('\n\n')
-    : '';
-  let html = esc(template)
-    .replace(/\[Name\]/g,          `<strong>${esc(name) || '[Name]'}</strong>`)
-    .replace(/\[ORD Number\]/g,    `<strong>${esc(ord)  || '[ORD Number]'}</strong>`)
-    .replace(/\[email\]/g,         `<strong>${esc(email)|| '[email]'}</strong>`)
-    .replace(/\[products\]/g,      `<strong>${esc(prods)|| '[products]'}</strong>`)
-    .replace(/\[product links\]/g, linkLinesHtml)
-    .replace(/\[protips\]/g,       protipHtml);
-  document.getElementById('preview').innerHTML = html;
+  document.getElementById('preview').textContent = buildBody('\n');
 }
 
 function generate(){
@@ -475,22 +475,9 @@ function generate(){
 
 function doGenerate(){
   closeModal();
-  const ord      = document.getElementById('ordNum').value.trim();
-  const email    = document.getElementById('emailAddr').value.trim();
-  const name     = document.getElementById('emailName').value.trim();
-  const template = document.getElementById('emailTemplate').value;
-  const prods    = activeProducts().join(', ');
-  const tips     = buildProtips();
-  const linkLines  = buildLinkLinesPlain();
-  const protipText = tips.map(t => `Protip: ${t}`).join('\r\n\r\n');
-  const body = template
-    .replace(/\[Name\]/g,          name)
-    .replace(/\[ORD Number\]/g,    ord)
-    .replace(/\[email\]/g,         email)
-    .replace(/\[products\]/g,      prods)
-    .replace(/\[product links\]/g, linkLines)
-    .replace(/\[protips\]/g,       protipText)
-    .replace(/\n/g, '\r\n');
+  const ord   = document.getElementById('ordNum').value.trim();
+  const email = document.getElementById('emailAddr').value.trim();
+  const body    = buildBody('\r\n');
   const subject = `BinMaster Preparation ${ord}`;
   window.location.href = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   const date = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
@@ -519,9 +506,9 @@ function renderHist(){
   ul.innerHTML = history.slice().reverse().map((h, ri) => {
     const i = history.length - 1 - ri;
     return `<li>
-      <span class="ho">${esc(h.ord)}</span>
-      <span class="he">${esc(h.email)}</span>
-      <span class="hd">${esc(h.date)}</span>
+      <span class="ho">${h.ord}</span>
+      <span class="he">${h.email}</span>
+      <span class="hd">${h.date}</span>
       <button class="hdel" onclick="delHist(${i})" title="Remove">✕</button>
     </li>`;
   }).join('');
