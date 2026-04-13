@@ -32,11 +32,12 @@ header{background:var(--g900);color:var(--white);display:flex;align-items:stretc
 .fg input.warn{border-color:var(--amber);background:var(--amber-lt)}
 .dupmsg{display:none;font-size:.75rem;font-weight:600;color:var(--amber);margin-top:5px}
 .dupmsg.show{display:block}
-.bwrap{display:flex;flex-wrap:wrap;gap:6px}
+.btn-rows{display:flex;flex-direction:column;gap:6px}
+.btn-row{display:flex;flex-wrap:wrap;gap:6px}
 .pb{background:var(--g100);border:2px solid var(--g200);border-radius:5px;padding:5px 12px;font-family:'Barlow',sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .15s;color:var(--g700);white-space:nowrap;line-height:1.3}
 .pb:hover{border-color:var(--red);color:var(--red);background:var(--red-lt)}
 .pb.on{background:var(--red);border-color:var(--red-dk);color:var(--white);box-shadow:0 2px 6px rgba(200,16,46,.3)}
-.pvbox{background:#fafafa;border:1px solid var(--g200);border-radius:6px;padding:18px 22px;font-size:.82rem;line-height:1.9;color:var(--g800);max-height:560px;overflow-y:auto;font-family:'Barlow',sans-serif;white-space:pre-wrap;word-break:break-word}
+.pvbox{background:#fafafa;border:1px solid var(--g200);border-radius:6px;padding:18px 22px;font-size:.82rem;line-height:1.75;color:var(--g800);max-height:560px;overflow-y:auto;font-family:'Barlow',sans-serif;white-space:pre-wrap;word-break:break-word}
 .pvlabel{font-size:.69rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g400);margin-bottom:8px}
 .sidebar{display:flex;flex-direction:column;gap:18px}
 .slist{list-style:none;max-height:260px;overflow-y:auto}
@@ -109,16 +110,16 @@ header{background:var(--g900);color:var(--white);display:flex;align-items:stretc
         <div class="frow">
           <div class="fg">
             <label>ORD Number</label>
-            <input id="ordNum" type="text" placeholder="e.g. ORD-12345" oninput="checkDup()">
+            <input id="ordNum" type="text" autocomplete="off" placeholder="e.g. ORD-12345" oninput="checkDup()">
             <div class="dupmsg" id="dupMsg">⚠ Already sent for this ORD number</div>
           </div>
           <div class="fg">
             <label>Email Address</label>
-            <input id="emailAddr" type="email" placeholder="customer@example.com" oninput="refreshPreview()">
+            <input id="emailAddr" type="email" autocomplete="off" placeholder="customer@example.com" oninput="refreshPreview()">
           </div>
           <div class="fg">
             <label>Name</label>
-            <input id="emailName" type="text" placeholder="e.g. John" oninput="refreshPreview()">
+            <input id="emailName" type="text" autocomplete="name" placeholder="e.g. John Smith" oninput="refreshPreview()">
           </div>
         </div>
       </div>
@@ -131,7 +132,7 @@ header{background:var(--g900);color:var(--white);display:flex;align-items:stretc
         <button class="clrbtn" style="margin-left:auto" onclick="clearSel()">Clear All</button>
       </div>
       <div class="cb">
-        <div class="bwrap" id="btnGrid"></div>
+        <div class="btn-rows" id="btnRows"></div>
       </div>
     </div>
 
@@ -216,44 +217,50 @@ header{background:var(--g900);color:var(--white);display:flex;align-items:stretc
 </div>
 
 <script>
+const BTN_ROWS = [
+  ["NCR", "CNCR", "3D", "SmartBob", "Senix", "GWR"],
+  ["BinCloud, Gateway", "Binventory, Ebob", "LTX", "C100", "C-50", "LTR-100", "DPM"],
+  ["Capacitance Probe", "Rotary", "Vibrating Probe", "Diaphragm", "Tilt Switch", "FD-2000", "Airbrator"]
+];
+
 const SRC = [
-  {product:"NCR",               name:"NCR: BinDisc Setup Guide",                      url:"https://bmtchspprt.github.io/radar-setup/bindisc.html"},
-  {product:"NCR",               name:"NCR Manual",                                     url:"https://support.binmaster.com/kb/view/bc8e6a67-a401-4bc6-aa83-3423a0282860"},
-  {product:"NCR",               name:"NCR Wiring",                                     url:"https://support.binmaster.com/kb/view/a5d3b4e0-a336-43f4-94f4-962eeef7d7af"},
-  {product:"NCR",               name:"NCR-86 Material Calibration Video",              url:"https://support.binmaster.com/kb/view/902c7769-9671-45ab-a52c-6ada011925ec"},
-  {product:"CNCR",              name:"CNCR Manual",                                    url:"https://support.binmaster.com/kb/view/d71297d9-77ac-49f8-97a4-6d183bf3adbc"},
-  {product:"CNCR",              name:"CNCR Wiring",                                    url:"https://support.binmaster.com/kb/view/9ab4c1b8-9795-4e4a-90a7-192da74a5729"},
-  {product:"CNCR",              name:"CNCR: Bluetooth Setup Guide",                    url:"https://support.binmaster.com/kb/view/a0e315ac-84e8-49a7-823e-b263d44a3017"},
-  {product:"SmartBob",          name:"SmartBob Manual",                                url:"https://support.binmaster.com/kb/view/c63c227b-5e08-4171-8c7f-58a804e3f06a"},
-  {product:"SmartBob",          name:"SmartBob Wiring",                                url:"https://support.binmaster.com/kb/view/3ae8f673-3dfd-466f-b9fd-2e814996426a"},
-  {product:"Senix",             name:"Senix Toughsonic Manual",                        url:"https://support.binmaster.com/kb/view/376df1e4-4906-4f01-b9e6-c4e8e0943da0"},
-  {product:"Senix",             name:"Senix Videos",                                   url:"https://support.binmaster.com/kb/view/92f66ca8-5cfd-4ad5-ba42-8bd67a5406db"},
-  {product:"3D",                name:"3D Manual",                                      url:"https://support.binmaster.com/kb/view/7d8bee17-d629-4075-a18b-7e0725f4b52a"},
-  {product:"3D",                name:"3D Wiring",                                      url:"https://support.binmaster.com/kb/view/70cbec26-fa02-4934-a95c-593cf5092229"},
-  {product:"3D",                name:"3D extension installation: videos and manuals",  url:"https://support.binmaster.com/kb/view/70cbec26-fa02-4934-a95c-593cf5092229"},
-  {product:"3D",                name:"3D Downloads",                                   url:"https://support.binmaster.com/kb/view/bb6f64b8-6c24-4077-b93e-48cf8ec60767"},
-  {product:"GWR",               name:"Guided Wave Radar Manuals",                      url:"https://support.binmaster.com/kb/view/e29fbc11-0526-4ff9-9c76-da324a5a9ca3"},
-  {product:"GWR",               name:"Guided Wave Radar Wiring",                       url:"https://support.binmaster.com/kb/view/baa0c650-0575-4b4f-a0dc-86911ca25a66"},
-  {product:"Rotary",            name:"BMRX Rotary Manual",                             url:"https://support.binmaster.com/kb/view/66e6b142-438c-4f2f-85c2-bda53cba000f"},
-  {product:"Rotary",            name:"Rotary Wiring",                                  url:"https://support.binmaster.com/kb/view/809dda8f-1de8-44ae-af07-fe2865c03113"},
-  {product:"Capacitance Probe", name:"Capacitance Probe Manual",                       url:"https://support.binmaster.com/kb/view/4895275b-1f7c-4b28-8fec-925faa017f46"},
-  {product:"Capacitance Probe", name:"Procap Probe Adjustments Video",                 url:"https://support.binmaster.com/kb/view/c67bbd67-e00b-46ef-9f72-38a83856a103"},
-  {product:"Vibrating Probe",   name:"Vibrating Rod Manual",                           url:"https://support.binmaster.com/kb/view/bd8af8e0-e43b-4771-bd52-52b8748f7c96"},
-  {product:"Diaphragm",         name:"Diaphragm Switch Manual",                        url:"https://support.binmaster.com/kb/view/9cf52a34-53ce-469c-8d0f-adffd00ab0c4"},
-  {product:"Tilt Switch",       name:"Tilt Switch Manual",                             url:"https://support.binmaster.com/kb/view/b9b5eac2-8ab5-4379-91cb-d753cc51927a"},
-  {product:"C100",              name:"C-100 Manual",                                   url:"https://support.binmaster.com/kb/view/811e6e4d-81ec-4906-be46-981773c71a69"},
-  {product:"C100",              name:"C-100 Setup Guide",                              url:"https://binmastercody.github.io/c100/"},
-  {product:"C-50",              name:"C-50 Manual",                                    url:"https://binmaster.com/amfile/file/download/file/1253/product/4260/"},
-  {product:"DPM",               name:"DPM Manual",                                     url:"https://support.binmaster.com/kb/view/717dead8-a1c3-4518-8238-857ecac445e3"},
-  {product:"DPM",               name:"DPM-100 Modbus Quick Start Guide",               url:"https://binmaster.com/amfile/file/download/file/1049/product/4799/"},
-  {product:"LTR-100",           name:"LTR-100 Manual",                                 url:"https://support.binmaster.com/kb/view/d33f37bb-9332-420a-869f-8f30113caf49"},
-  {product:"LTR-100",           name:"LTR Addressing",                                 url:"https://support.binmaster.com/kb/view/7201c8aa-0bb0-480d-9400-1c12389dcdbc"},
-  {product:"BinCloud, Gateway", name:"Form Vessel Setup",                              url:"https://support.binmaster.com/kb/view/d65c70fd-45a6-4720-9db6-de9f61348bae"},
-  {product:"BinCloud, Gateway", name:"Firewall Details",                               url:"https://support.binmaster.com/kb/view/6eba9a1b-a15f-4ef6-b96b-c50478438d5d"},
-  {product:"Binventory, Ebob",  name:"Binventory Install, Upgrade, Move",              url:"https://support.binmaster.com/kb/view/5d310bc3-e081-4124-a491-57b62a079870"},
-  {product:"FD-2000",           name:"Flow Detect Manual",                             url:"https://binmaster.com/amfile/file/download/file/1151/product/4230/"},
-  {product:"Airbrator",         name:"Airpad, Airbrator Manuals",                      url:"https://support.binmaster.com/kb/view/b5fefb58-7dd4-463b-9f32-3adaa07b5d3b"},
-  {product:"LTX",               name:"Contact technicalsupport@binmaster.com",         url:"mailto:technicalsupport@binmaster.com"}
+  {product:"NCR",               name:"NCR: BinDisc Setup Guide",                     url:"https://bmtchspprt.github.io/radar-setup/bindisc.html"},
+  {product:"NCR",               name:"NCR Manual",                                    url:"https://support.binmaster.com/kb/view/bc8e6a67-a401-4bc6-aa83-3423a0282860"},
+  {product:"NCR",               name:"NCR Wiring",                                    url:"https://support.binmaster.com/kb/view/a5d3b4e0-a336-43f4-94f4-962eeef7d7af"},
+  {product:"NCR",               name:"NCR-86 Material Calibration Video",             url:"https://support.binmaster.com/kb/view/902c7769-9671-45ab-a52c-6ada011925ec"},
+  {product:"CNCR",              name:"CNCR Manual",                                   url:"https://support.binmaster.com/kb/view/d71297d9-77ac-49f8-97a4-6d183bf3adbc"},
+  {product:"CNCR",              name:"CNCR Wiring",                                   url:"https://support.binmaster.com/kb/view/9ab4c1b8-9795-4e4a-90a7-192da74a5729"},
+  {product:"CNCR",              name:"CNCR: Bluetooth Setup Guide",                   url:"https://support.binmaster.com/kb/view/a0e315ac-84e8-49a7-823e-b263d44a3017"},
+  {product:"SmartBob",          name:"SmartBob Manual",                               url:"https://support.binmaster.com/kb/view/c63c227b-5e08-4171-8c7f-58a804e3f06a"},
+  {product:"SmartBob",          name:"SmartBob Wiring",                               url:"https://support.binmaster.com/kb/view/3ae8f673-3dfd-466f-b9fd-2e814996426a"},
+  {product:"Senix",             name:"Senix Toughsonic Manual",                       url:"https://support.binmaster.com/kb/view/376df1e4-4906-4f01-b9e6-c4e8e0943da0"},
+  {product:"Senix",             name:"Senix Videos",                                  url:"https://support.binmaster.com/kb/view/92f66ca8-5cfd-4ad5-ba42-8bd67a5406db"},
+  {product:"3D",                name:"3D Manual",                                     url:"https://support.binmaster.com/kb/view/7d8bee17-d629-4075-a18b-7e0725f4b52a"},
+  {product:"3D",                name:"3D Wiring",                                     url:"https://support.binmaster.com/kb/view/70cbec26-fa02-4934-a95c-593cf5092229"},
+  {product:"3D",                name:"3D extension installation: videos and manuals", url:"https://support.binmaster.com/kb/view/70cbec26-fa02-4934-a95c-593cf5092229"},
+  {product:"3D",                name:"3D Downloads",                                  url:"https://support.binmaster.com/kb/view/bb6f64b8-6c24-4077-b93e-48cf8ec60767"},
+  {product:"GWR",               name:"Guided Wave Radar Manuals",                     url:"https://support.binmaster.com/kb/view/e29fbc11-0526-4ff9-9c76-da324a5a9ca3"},
+  {product:"GWR",               name:"Guided Wave Radar Wiring",                      url:"https://support.binmaster.com/kb/view/baa0c650-0575-4b4f-a0dc-86911ca25a66"},
+  {product:"Rotary",            name:"BMRX Rotary Manual",                            url:"https://support.binmaster.com/kb/view/66e6b142-438c-4f2f-85c2-bda53cba000f"},
+  {product:"Rotary",            name:"Rotary Wiring",                                 url:"https://support.binmaster.com/kb/view/809dda8f-1de8-44ae-af07-fe2865c03113"},
+  {product:"Capacitance Probe", name:"Capacitance Probe Manual",                      url:"https://support.binmaster.com/kb/view/4895275b-1f7c-4b28-8fec-925faa017f46"},
+  {product:"Capacitance Probe", name:"Procap Probe Adjustments Video",                url:"https://support.binmaster.com/kb/view/c67bbd67-e00b-46ef-9f72-38a83856a103"},
+  {product:"Vibrating Probe",   name:"Vibrating Rod Manual",                          url:"https://support.binmaster.com/kb/view/bd8af8e0-e43b-4771-bd52-52b8748f7c96"},
+  {product:"Diaphragm",         name:"Diaphragm Switch Manual",                       url:"https://support.binmaster.com/kb/view/9cf52a34-53ce-469c-8d0f-adffd00ab0c4"},
+  {product:"Tilt Switch",       name:"Tilt Switch Manual",                            url:"https://support.binmaster.com/kb/view/b9b5eac2-8ab5-4379-91cb-d753cc51927a"},
+  {product:"C100",              name:"C-100 Manual",                                  url:"https://support.binmaster.com/kb/view/811e6e4d-81ec-4906-be46-981773c71a69"},
+  {product:"C100",              name:"C-100 Setup Guide",                             url:"https://binmastercody.github.io/c100/"},
+  {product:"C-50",              name:"C-50 Manual",                                   url:"https://binmaster.com/amfile/file/download/file/1253/product/4260/"},
+  {product:"DPM",               name:"DPM Manual",                                    url:"https://support.binmaster.com/kb/view/717dead8-a1c3-4518-8238-857ecac445e3"},
+  {product:"DPM",               name:"DPM-100 Modbus Quick Start Guide",              url:"https://binmaster.com/amfile/file/download/file/1049/product/4799/"},
+  {product:"LTR-100",           name:"LTR-100 Manual",                                url:"https://support.binmaster.com/kb/view/d33f37bb-9332-420a-869f-8f30113caf49"},
+  {product:"LTR-100",           name:"LTR Addressing",                                url:"https://support.binmaster.com/kb/view/7201c8aa-0bb0-480d-9400-1c12389dcdbc"},
+  {product:"BinCloud, Gateway", name:"Form Vessel Setup",                             url:"https://support.binmaster.com/kb/view/d65c70fd-45a6-4720-9db6-de9f61348bae"},
+  {product:"BinCloud, Gateway", name:"Firewall Details",                              url:"https://support.binmaster.com/kb/view/6eba9a1b-a15f-4ef6-b96b-c50478438d5d"},
+  {product:"Binventory, Ebob",  name:"Binventory Install, Upgrade, Move",             url:"https://support.binmaster.com/kb/view/5d310bc3-e081-4124-a491-57b62a079870"},
+  {product:"FD-2000",           name:"Flow Detect Manual",                            url:"https://binmaster.com/amfile/file/download/file/1151/product/4230/"},
+  {product:"Airbrator",         name:"Airpad, Airbrator Manuals",                     url:"https://support.binmaster.com/kb/view/b5fefb58-7dd4-463b-9f32-3adaa07b5d3b"},
+  {product:"LTX",               name:"Contact technicalsupport@binmaster.com",        url:"mailto:technicalsupport@binmaster.com"}
 ];
 
 const PROTIPS = {
@@ -286,16 +293,6 @@ try { history = JSON.parse(localStorage.getItem('bm_hist') || '[]'); } catch(e){
 
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-function uniqueProds(){
-  const seen = new Set(), out = [];
-  rows.forEach(r => {
-    r.product.trim().split(',').map(p=>p.trim()).filter(Boolean).forEach(p => {
-      if(!seen.has(p)){ seen.add(p); out.push(p); }
-    });
-  });
-  return out.sort((a,b) => a.localeCompare(b));
-}
-
 function rowsForProduct(p){
   return rows
     .filter(r => r.product.trim().split(',').map(x=>x.trim()).includes(p))
@@ -315,17 +312,38 @@ function buildProtips(){
 }
 
 function renderBtns(){
-  const g = document.getElementById('btnGrid');
-  g.innerHTML = '';
-  uniqueProds().forEach(p => {
-    const b = document.createElement('button');
-    b.className = 'pb';
-    b.textContent = p;
-    b.dataset.p = p;
-    b.onclick = () => toggleProd(p);
-    g.appendChild(b);
+  const container = document.getElementById('btnRows');
+  container.innerHTML = '';
+  const placed = new Set();
+  BTN_ROWS.forEach(rowProds => {
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'btn-row';
+    rowProds.forEach(p => { placed.add(p); rowDiv.appendChild(makeBtn(p)); });
+    container.appendChild(rowDiv);
   });
+  const seen = new Set(), allProds = [];
+  rows.forEach(r => {
+    r.product.trim().split(',').map(x=>x.trim()).filter(Boolean).forEach(p => {
+      if(!seen.has(p)){ seen.add(p); allProds.push(p); }
+    });
+  });
+  const overflow = allProds.filter(p => !placed.has(p));
+  if(overflow.length){
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'btn-row';
+    overflow.sort().forEach(p => rowDiv.appendChild(makeBtn(p)));
+    container.appendChild(rowDiv);
+  }
   syncBtns();
+}
+
+function makeBtn(p){
+  const b = document.createElement('button');
+  b.className = 'pb';
+  b.textContent = p;
+  b.dataset.p = p;
+  b.onclick = () => toggleProd(p);
+  return b;
 }
 
 function toggleProd(p){
@@ -392,23 +410,41 @@ function insertToken(token){
   refreshPreview();
 }
 
+function buildLinkLinesHtml(){
+  const items = rows.filter(r => sel.has(r.id));
+  if(!items.length) return '<em style="color:var(--g400)">[no links selected]</em>';
+  const groups = [], seen = new Set();
+  items.forEach(r => { if(!seen.has(r.product)){ seen.add(r.product); groups.push(r.product); } });
+  return groups.map(prod => {
+    return items.filter(r => r.product === prod)
+      .map(r => `  &gt; <a href="${esc(r.url)}" target="_blank">${esc(r.name)}</a>`)
+      .join('\n');
+  }).join('\n\n');
+}
+
+function buildLinkLinesPlain(){
+  const items = rows.filter(r => sel.has(r.id));
+  if(!items.length) return '[no links selected]';
+  const groups = [], seen = new Set();
+  items.forEach(r => { if(!seen.has(r.product)){ seen.add(r.product); groups.push(r.product); } });
+  return groups.map(prod => {
+    return items.filter(r => r.product === prod)
+      .map(r => `  > ${r.name}: ${r.url}`)
+      .join('\r\n');
+  }).join('\r\n\r\n');
+}
+
 function refreshPreview(){
   const email    = document.getElementById('emailAddr').value.trim();
   const name     = document.getElementById('emailName').value.trim();
   const ord      = document.getElementById('ordNum').value.trim();
   const template = document.getElementById('emailTemplate').value;
-  const items    = rows.filter(r => sel.has(r.id));
   const prods    = activeProducts().join(', ');
   const tips     = buildProtips();
-
-  const linkLinesHtml = items.length
-    ? items.map(r => `  <a href="${esc(r.url)}" target="_blank">${esc(r.name)}</a>`).join('\n')
-    : '  <em style="color:var(--g400)">[no links selected]</em>';
-
+  const linkLinesHtml = buildLinkLinesHtml();
   const protipHtml = tips.length
-    ? tips.map(t => `💡 <strong>Protip:</strong> ${esc(t)}`).join('\n')
+    ? tips.map(t => `💡 <strong>Protip:</strong> ${esc(t)}`).join('\n\n')
     : '';
-
   let html = esc(template)
     .replace(/\[Name\]/g,          `<strong>${esc(name) || '[Name]'}</strong>`)
     .replace(/\[ORD Number\]/g,    `<strong>${esc(ord)  || '[ORD Number]'}</strong>`)
@@ -416,7 +452,6 @@ function refreshPreview(){
     .replace(/\[products\]/g,      `<strong>${esc(prods)|| '[products]'}</strong>`)
     .replace(/\[product links\]/g, linkLinesHtml)
     .replace(/\[protips\]/g,       protipHtml);
-
   document.getElementById('preview').innerHTML = html;
 }
 
@@ -444,13 +479,10 @@ function doGenerate(){
   const email    = document.getElementById('emailAddr').value.trim();
   const name     = document.getElementById('emailName').value.trim();
   const template = document.getElementById('emailTemplate').value;
-  const items    = rows.filter(r => sel.has(r.id));
   const prods    = activeProducts().join(', ');
   const tips     = buildProtips();
-
-  const linkLines  = items.map(r => `  ${r.name}: ${r.url}`).join('\r\n');
-  const protipText = tips.map(t => `Protip: ${t}`).join('\r\n');
-
+  const linkLines  = buildLinkLinesPlain();
+  const protipText = tips.map(t => `Protip: ${t}`).join('\r\n\r\n');
   const body = template
     .replace(/\[Name\]/g,          name)
     .replace(/\[ORD Number\]/g,    ord)
@@ -459,10 +491,8 @@ function doGenerate(){
     .replace(/\[product links\]/g, linkLines)
     .replace(/\[protips\]/g,       protipText)
     .replace(/\n/g, '\r\n');
-
   const subject = `BinMaster Preparation ${ord}`;
   window.location.href = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
   const date = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
   history.push({ord, email, date});
   try { localStorage.setItem('bm_hist', JSON.stringify(history)); } catch(e){}
