@@ -11,25 +11,20 @@
   --g900:#181818; --g800:#2c2c2c; --g700:#404040; --g600:#5a5a5a;
   --g400:#9a9a9a; --g200:#e4e4e4; --g100:#f4f4f4; --white:#fff;
   --amber:#b45309; --amber-lt:#fef3c7;
-  --green:#166534; --green-lt:#dcfce7;
   --sh:0 2px 8px rgba(0,0,0,.10); --sh-lg:0 8px 32px rgba(0,0,0,.18);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Barlow',sans-serif;background:var(--g100);color:var(--g900);min-height:100vh}
-
 header{background:var(--g900);color:var(--white);display:flex;align-items:stretch;border-bottom:4px solid var(--red)}
 .hbar{background:var(--red);width:9px;flex-shrink:0}
 .hcont{padding:15px 24px;display:flex;align-items:center;gap:14px}
 .hcont h1{font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
 .hcont p{font-size:.72rem;color:#bbb;margin-top:2px;letter-spacing:.06em;text-transform:uppercase}
-
 .layout{display:grid;grid-template-columns:1fr 400px;gap:18px;padding:20px;max-width:1560px;margin:0 auto}
 @media(max-width:1000px){.layout{grid-template-columns:1fr}}
-
-.card{background:var(--white);border-radius:8px;box-shadow:var(--sh);overflow:hidden;margin-bottom:18px}
+.card{background:var(--white);border-radius:8px;box-shadow:var(--sh);overflow:hidden}
 .ch{background:var(--g900);color:var(--white);padding:11px 18px;font-family:'Barlow Condensed',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
 .cb{padding:18px}
-
 .frow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
 .fg label{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--g600);margin-bottom:5px}
 .fg input{width:100%;border:2px solid var(--g200);border-radius:5px;padding:9px 11px;font-family:'Barlow',sans-serif;font-size:.88rem;transition:border-color .15s;background:var(--white)}
@@ -37,34 +32,56 @@ header{background:var(--g900);color:var(--white);display:flex;align-items:stretc
 .fg input.warn{border-color:var(--amber);background:var(--amber-lt)}
 .dupmsg{display:none;font-size:.75rem;font-weight:600;color:var(--amber);margin-top:5px}
 .dupmsg.show{display:block}
-
-.btn-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--g100)}
-.btn-row:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.bwrap{display:flex;flex-wrap:wrap;gap:6px}
 .pb{background:var(--g100);border:2px solid var(--g200);border-radius:5px;padding:5px 12px;font-family:'Barlow',sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .15s;color:var(--g700);white-space:nowrap;line-height:1.3}
 .pb:hover{border-color:var(--red);color:var(--red);background:var(--red-lt)}
 .pb.on{background:var(--red);border-color:var(--red-dk);color:var(--white);box-shadow:0 2px 6px rgba(200,16,46,.3)}
-
-.pvbox{background:#fafafa;border:1px solid var(--g200);border-radius:6px;padding:18px 22px;font-size:.82rem;line-height:1.9;color:var(--g800);max-height:520px;overflow-y:auto;font-family:'Barlow',sans-serif;white-space:pre-wrap;word-break:break-word}
-
-.slist{list-style:none;max-height:220px;overflow-y:auto}
+.pvbox{background:#fafafa;border:1px solid var(--g200);border-radius:6px;padding:18px 22px;font-size:.82rem;line-height:1.9;color:var(--g800);max-height:560px;overflow-y:auto;font-family:'Barlow',sans-serif;white-space:pre-wrap;word-break:break-word}
+.pvlabel{font-size:.69rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--g400);margin-bottom:8px}
+.sidebar{display:flex;flex-direction:column;gap:18px}
+.slist{list-style:none;max-height:260px;overflow-y:auto}
 .slist li{display:flex;align-items:flex-start;gap:7px;padding:6px 0;border-bottom:1px solid var(--g200);font-size:.79rem}
+.slist li:last-child{border-bottom:none}
+.slbl{font-weight:600;line-height:1.35;flex:1;min-width:0}
+.slbl a{color:var(--red);text-decoration:underline}
+.ssub{font-size:.69rem;color:var(--g400);margin-top:2px}
 .sx{flex-shrink:0;background:none;border:none;cursor:pointer;color:var(--g400);font-size:.85rem;padding:0 3px;transition:color .12s;margin-top:1px}
 .sx:hover{color:var(--red)}
-
-.genbtn{display:block;width:100%;background:var(--red);color:var(--white);border:none;border-radius:7px;padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .15s}
-.genbtn:hover{background:var(--red-dk)}
-
-.hlist{list-style:none;max-height:200px;overflow-y:auto}
+.emsg{color:var(--g400);font-size:.82rem;text-align:center;padding:16px 0;font-style:italic;display:block}
+.genbtn{display:block;width:100%;background:var(--red);color:var(--white);border:none;border-radius:7px;padding:16px;font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background .15s,transform .1s;box-shadow:0 4px 16px rgba(200,16,46,.3)}
+.genbtn:hover{background:var(--red-dk);transform:translateY(-1px)}
+.genbtn:active{transform:translateY(0)}
+.hlist{list-style:none;max-height:180px;overflow-y:auto}
 .hlist li{display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid var(--g200);font-size:.78rem}
-
-.editable-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.85rem}
-.editable-table th{background:var(--g900);color:white;text-align:left;padding:8px;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase}
-.editable-table td{border:1px solid var(--g200);padding:5px}
-.editable-table input{width:100%;border:none;padding:4px;font-family:inherit;font-size:inherit}
-
+.hlist li:last-child{border-bottom:none}
+.ho{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.86rem;color:var(--red);min-width:70px}
+.he{color:var(--g600);flex:1;word-break:break-all}
+.hd{color:var(--g400);font-size:.7rem;white-space:nowrap}
+.hdel{background:none;border:none;cursor:pointer;color:var(--g400);font-size:.82rem;padding:0 3px;transition:color .12s}
+.hdel:hover{color:var(--red)}
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:1000;align-items:center;justify-content:center}
 .overlay.open{display:flex}
-.modal{background:var(--white);border-radius:10px;padding:32px;max-width:420px;width:90%;text-align:center}
+.modal{background:var(--white);border-radius:10px;box-shadow:var(--sh-lg);padding:32px;max-width:420px;width:90%;text-align:center}
+.micon{font-size:2.5rem;margin-bottom:10px}
+.modal h2{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;color:var(--amber);text-transform:uppercase;margin-bottom:8px}
+.modal p{font-size:.87rem;color:var(--g600);margin-bottom:24px;line-height:1.5}
+.mbtns{display:flex;gap:10px;justify-content:center}
+.mbtn{border:none;border-radius:6px;padding:10px 24px;font-family:'Barlow',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer}
+.mbtn:hover{opacity:.85}
+.mbtn.pri{background:var(--red);color:var(--white)}
+.mbtn.sec{background:var(--g200);color:var(--g700)}
+.clrbtn{background:none;border:1px solid var(--g200);border-radius:5px;padding:4px 11px;font-family:'Barlow',sans-serif;font-size:.74rem;font-weight:600;color:var(--g600);cursor:pointer;transition:all .15s}
+.clrbtn:hover{border-color:var(--red);color:var(--red)}
+.badge{background:var(--red);color:var(--white);border-radius:10px;padding:1px 8px;font-size:.74rem}
+.template-editor{width:100%;min-height:220px;border:2px solid var(--g200);border-radius:5px;padding:10px 13px;font-family:'Barlow',sans-serif;font-size:.82rem;line-height:1.7;resize:vertical;transition:border-color .15s;color:var(--g800)}
+.template-editor:focus{outline:none;border-color:var(--red)}
+.token-bar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.token{background:var(--red-lt);border:1px solid var(--red);color:var(--red-dk);border-radius:4px;padding:3px 10px;font-size:.73rem;font-weight:700;cursor:pointer;font-family:monospace;transition:all .15s}
+.token:hover{background:var(--red);color:var(--white)}
+.token-hint{font-size:.69rem;color:var(--g400);margin-bottom:6px}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--g100)}
+::-webkit-scrollbar-thumb{background:var(--g400);border-radius:3px}
 </style>
 </head>
 <body>
@@ -81,204 +98,424 @@ header{background:var(--g900);color:var(--white);display:flex;align-items:stretc
 </header>
 
 <div class="layout">
-  <div style="display:flex;flex-direction:column">
+
+  <!-- LEFT COLUMN -->
+  <div style="display:flex;flex-direction:column;gap:18px">
+
+    <!-- Recipient Info -->
     <div class="card">
       <div class="ch">📋 Recipient Information</div>
       <div class="cb">
         <div class="frow">
-          <div class="fg"><label>ORD Number</label><input id="ordNum" type="text" oninput="checkDup()">
-            <div class="dupmsg" id="dupMsg">⚠ Already sent for this ORD</div>
+          <div class="fg">
+            <label>ORD Number</label>
+            <input id="ordNum" type="text" placeholder="e.g. ORD-12345" oninput="checkDup()">
+            <div class="dupmsg" id="dupMsg">⚠ Already sent for this ORD number</div>
           </div>
-          <div class="fg"><label>Email Address</label><input id="emailAddr" type="email" oninput="refreshPreview()"></div>
-          <div class="fg"><label>Email Name</label><input id="emailName" type="text" oninput="refreshPreview()"></div>
+          <div class="fg">
+            <label>Email Address</label>
+            <input id="emailAddr" type="email" placeholder="customer@example.com" oninput="refreshPreview()">
+          </div>
+          <div class="fg">
+            <label>Name</label>
+            <input id="emailName" type="text" placeholder="e.g. John" oninput="refreshPreview()">
+          </div>
         </div>
       </div>
     </div>
 
+    <!-- Product Buttons -->
     <div class="card">
-      <div class="ch">🏷 Quick-Select by Product <button class="clrbtn" style="margin-left:auto; cursor:pointer" onclick="clearSel()">Clear All</button></div>
-      <div class="cb" id="btnContainer">
-        <div class="btn-row" id="row1"></div>
-        <div class="btn-row" id="row2"></div>
-        <div class="btn-row" id="row3"></div>
+      <div class="ch">
+        🏷 Quick-Select by Product
+        <button class="clrbtn" style="margin-left:auto" onclick="clearSel()">Clear All</button>
+      </div>
+      <div class="cb">
+        <div class="bwrap" id="btnGrid"></div>
       </div>
     </div>
 
+    <!-- Email Preview -->
     <div class="card">
       <div class="ch">👁 Email Preview</div>
-      <div class="cb">
-        <div class="pvbox" id="preview"></div>
+      <div class="cb" style="padding:16px 20px">
+        <div class="pvlabel">Live preview — updates as you select products and fill in fields</div>
+        <div class="pvbox" id="preview">Fill in the fields above and select products to see a preview.</div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="ch">⚙ Manage Product Links</div>
-      <div class="cb" style="overflow-x:auto">
-        <table class="editable-table" id="linkTable">
-          <thead>
-            <tr><th>Product</th><th>Name</th><th>URL</th><th>Action</th></tr>
-          </thead>
-          <tbody id="tableBody"></tbody>
-        </table>
-        <button class="pb" style="margin-top:10px" onclick="addRow()">+ Add Row</button>
-      </div>
-    </div>
   </div>
 
+  <!-- RIGHT SIDEBAR -->
   <div class="sidebar">
-    <div class="card">
-      <div class="ch">✅ Selected Links <span class="badge" id="selBadge" style="margin-left:auto">0</span></div>
-      <div class="cb"><ul class="slist" id="selList"></ul></div>
-    </div>
 
+    <!-- Selected Links -->
     <div class="card">
-      <div class="ch">📧 Action</div>
-      <div class="cb">
-        <button class="genbtn" onclick="generate()">Generate Email</button>
+      <div class="ch">
+        ✅ Selected Links
+        <span class="badge" id="selBadge" style="margin-left:auto">0</span>
+      </div>
+      <div class="cb" style="padding:12px 16px">
+        <ul class="slist" id="selList"><li><span class="emsg">No links selected yet</span></li></ul>
       </div>
     </div>
 
+    <!-- Generate -->
     <div class="card">
-      <div class="ch">🕐 Sent History <button class="clrbtn" style="margin-left:auto; cursor:pointer" onclick="clearHist()">Clear</button></div>
-      <div class="cb"><ul class="hlist" id="histList"></ul></div>
+      <div class="ch">📧 Generate</div>
+      <div class="cb">
+        <button class="genbtn" onclick="generate()">⚡ Generate &amp; Open in Mail</button>
+        <p style="font-size:.72rem;color:var(--g400);margin-top:9px;text-align:center;line-height:1.4">Opens your default email client with the prepared letter</p>
+      </div>
     </div>
+
+    <!-- Email Template Editor -->
+    <div class="card">
+      <div class="ch">✏️ Email Template</div>
+      <div class="cb">
+        <div class="token-hint">Click a token to insert it at the cursor position:</div>
+        <div class="token-bar">
+          <span class="token" onclick="insertToken('[Name]')">[Name]</span>
+          <span class="token" onclick="insertToken('[ORD Number]')">[ORD Number]</span>
+          <span class="token" onclick="insertToken('[email]')">[email]</span>
+          <span class="token" onclick="insertToken('[products]')">[products]</span>
+          <span class="token" onclick="insertToken('[product links]')">[product links]</span>
+        </div>
+        <textarea class="template-editor" id="emailTemplate" oninput="refreshPreview()"></textarea>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="clrbtn" onclick="resetTemplate()">Reset to Default</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sent History -->
+    <div class="card">
+      <div class="ch">
+        🕐 Sent History
+        <button class="clrbtn" style="margin-left:auto" onclick="clearHist()">Clear All</button>
+      </div>
+      <div class="cb" style="padding:12px 16px">
+        <ul class="hlist" id="histList"></ul>
+      </div>
+    </div>
+
   </div>
 </div>
 
+<!-- Duplicate Warning Modal -->
 <div class="overlay" id="dupModal">
   <div class="modal">
-    <h2>Already Sent</h2>
+    <div class="micon">⚠️</div>
+    <h2>ORD Number Already Sent</h2>
     <p id="dupModalMsg"></p>
-    <button class="genbtn" onclick="doGenerate()">Send Anyway</button>
-    <button class="pb" onclick="closeModal()">Cancel</button>
+    <div class="mbtns">
+      <button class="mbtn pri" onclick="doGenerate()">Send Anyway</button>
+      <button class="mbtn sec" onclick="closeModal()">Cancel</button>
+    </div>
   </div>
 </div>
 
 <script>
-let rows = [
-  {product:"NCR", name:"NCR: BinDisc Setup Guide", url:"https://bmtchspprt.github.io/radar-setup/bindisc.html"},
-  {product:"NCR", name:"NCR Manual", url:"https://support.binmaster.com/kb/view/bc8e6a67-a401-4bc6-aa83-3423a0282860"},
-  {product:"CNCR", name:"CNCR Manual", url:"https://support.binmaster.com/kb/view/d71297d9-77ac-49f8-97a4-6d183bf3adbc"},
-  {product:"SmartBob", name:"SmartBob Manual", url:"https://support.binmaster.com/kb/view/c63c227b-5e08-4171-8c7f-58a804e3f06a"},
-  {product:"3D", name:"3D Manual", url:"https://support.binmaster.com/kb/view/7d8bee17-d629-4075-a18b-7e0725f4b52a"},
-  {product:"C100", name:"C-100 Setup Guide", url:"https://binmastercody.github.io/c100/"}
-].map((d,i)=>({id:i,...d}));
-
-const layoutRows = [
-  ["NCR", "CNCR", "3D", "SmartBob", "Senix", "GWR"],
-  ["BinCloud", "Binventory", "Gateway", "LTX", "C100", "C50", "DPM", "LTR100"],
-  ["Rotary", "Vibrating Probe", "FD-2000", "Diaphragm", "Capacitance Probe", "Airbrator"]
+const SRC = [
+  {product:"NCR",               name:"NCR: BinDisc Setup Guide",                      url:"https://bmtchspprt.github.io/radar-setup/bindisc.html"},
+  {product:"NCR",               name:"NCR Manual",                                     url:"https://support.binmaster.com/kb/view/bc8e6a67-a401-4bc6-aa83-3423a0282860"},
+  {product:"NCR",               name:"NCR Wiring",                                     url:"https://support.binmaster.com/kb/view/a5d3b4e0-a336-43f4-94f4-962eeef7d7af"},
+  {product:"NCR",               name:"NCR-86 Material Calibration Video",              url:"https://support.binmaster.com/kb/view/902c7769-9671-45ab-a52c-6ada011925ec"},
+  {product:"CNCR",              name:"CNCR Manual",                                    url:"https://support.binmaster.com/kb/view/d71297d9-77ac-49f8-97a4-6d183bf3adbc"},
+  {product:"CNCR",              name:"CNCR Wiring",                                    url:"https://support.binmaster.com/kb/view/9ab4c1b8-9795-4e4a-90a7-192da74a5729"},
+  {product:"CNCR",              name:"CNCR: Bluetooth Setup Guide",                    url:"https://support.binmaster.com/kb/view/a0e315ac-84e8-49a7-823e-b263d44a3017"},
+  {product:"SmartBob",          name:"SmartBob Manual",                                url:"https://support.binmaster.com/kb/view/c63c227b-5e08-4171-8c7f-58a804e3f06a"},
+  {product:"SmartBob",          name:"SmartBob Wiring",                                url:"https://support.binmaster.com/kb/view/3ae8f673-3dfd-466f-b9fd-2e814996426a"},
+  {product:"Senix",             name:"Senix Toughsonic Manual",                        url:"https://support.binmaster.com/kb/view/376df1e4-4906-4f01-b9e6-c4e8e0943da0"},
+  {product:"Senix",             name:"Senix Videos",                                   url:"https://support.binmaster.com/kb/view/92f66ca8-5cfd-4ad5-ba42-8bd67a5406db"},
+  {product:"3D",                name:"3D Manual",                                      url:"https://support.binmaster.com/kb/view/7d8bee17-d629-4075-a18b-7e0725f4b52a"},
+  {product:"3D",                name:"3D Wiring",                                      url:"https://support.binmaster.com/kb/view/70cbec26-fa02-4934-a95c-593cf5092229"},
+  {product:"3D",                name:"3D extension installation: videos and manuals",  url:"https://support.binmaster.com/kb/view/70cbec26-fa02-4934-a95c-593cf5092229"},
+  {product:"3D",                name:"3D Downloads",                                   url:"https://support.binmaster.com/kb/view/bb6f64b8-6c24-4077-b93e-48cf8ec60767"},
+  {product:"GWR",               name:"Guided Wave Radar Manuals",                      url:"https://support.binmaster.com/kb/view/e29fbc11-0526-4ff9-9c76-da324a5a9ca3"},
+  {product:"GWR",               name:"Guided Wave Radar Wiring",                       url:"https://support.binmaster.com/kb/view/baa0c650-0575-4b4f-a0dc-86911ca25a66"},
+  {product:"Rotary",            name:"BMRX Rotary Manual",                             url:"https://support.binmaster.com/kb/view/66e6b142-438c-4f2f-85c2-bda53cba000f"},
+  {product:"Rotary",            name:"Rotary Wiring",                                  url:"https://support.binmaster.com/kb/view/809dda8f-1de8-44ae-af07-fe2865c03113"},
+  {product:"Capacitance Probe", name:"Capacitance Probe Manual",                       url:"https://support.binmaster.com/kb/view/4895275b-1f7c-4b28-8fec-925faa017f46"},
+  {product:"Capacitance Probe", name:"Procap Probe Adjustments Video",                 url:"https://support.binmaster.com/kb/view/c67bbd67-e00b-46ef-9f72-38a83856a103"},
+  {product:"Vibrating Probe",   name:"Vibrating Rod Manual",                           url:"https://support.binmaster.com/kb/view/bd8af8e0-e43b-4771-bd52-52b8748f7c96"},
+  {product:"Diaphragm",         name:"Diaphragm Switch Manual",                        url:"https://support.binmaster.com/kb/view/9cf52a34-53ce-469c-8d0f-adffd00ab0c4"},
+  {product:"Tilt Switch",       name:"Tilt Switch Manual",                             url:"https://support.binmaster.com/kb/view/b9b5eac2-8ab5-4379-91cb-d753cc51927a"},
+  {product:"C100",              name:"C-100 Manual",                                   url:"https://support.binmaster.com/kb/view/811e6e4d-81ec-4906-be46-981773c71a69"},
+  {product:"C100",              name:"C-100 Setup Guide",                              url:"https://binmastercody.github.io/c100/"},
+  {product:"C-50",              name:"C-50 Manual",                                    url:"https://binmaster.com/amfile/file/download/file/1253/product/4260/"},
+  {product:"DPM",               name:"DPM Manual",                                     url:"https://support.binmaster.com/kb/view/717dead8-a1c3-4518-8238-857ecac445e3"},
+  {product:"DPM",               name:"DPM-100 Modbus Quick Start Guide",               url:"https://binmaster.com/amfile/file/download/file/1049/product/4799/"},
+  {product:"LTR-100",           name:"LTR-100 Manual",                                 url:"https://support.binmaster.com/kb/view/d33f37bb-9332-420a-869f-8f30113caf49"},
+  {product:"LTR-100",           name:"LTR Addressing",                                 url:"https://support.binmaster.com/kb/view/7201c8aa-0bb0-480d-9400-1c12389dcdbc"},
+  {product:"BinCloud, Gateway", name:"Form Vessel Setup",                              url:"https://support.binmaster.com/kb/view/d65c70fd-45a6-4720-9db6-de9f61348bae"},
+  {product:"BinCloud, Gateway", name:"Firewall Details",                               url:"https://support.binmaster.com/kb/view/6eba9a1b-a15f-4ef6-b96b-c50478438d5d"},
+  {product:"Binventory, Ebob",  name:"Binventory Install, Upgrade, Move",              url:"https://support.binmaster.com/kb/view/5d310bc3-e081-4124-a491-57b62a079870"},
+  {product:"FD-2000",           name:"Flow Detect Manual",                             url:"https://binmaster.com/amfile/file/download/file/1151/product/4230/"},
+  {product:"Airbrator",         name:"Airpad, Airbrator Manuals",                      url:"https://support.binmaster.com/kb/view/b5fefb58-7dd4-463b-9f32-3adaa07b5d3b"},
+  {product:"LTX",               name:"Contact technicalsupport@binmaster.com",         url:"mailto:technicalsupport@binmaster.com"}
 ];
 
+const PROTIPS = {
+  "CNCR":     ["Keep the yellow sheet and do your setup before installing. Trying to Bluetooth after installation can be tough as signals get lost inside of vessels."],
+  "NCR":      ["Water and radars do not mix. Check your seals. Anticipate water intrusion from conduits. Ask your installer to double check."],
+  "3D":       ["Water and sensors do not mix. Check your seals. Anticipate water intrusion from conduits. Ask your installer to double check."],
+  "SmartBob": ["Water and sensors do not mix. Check your seals. Anticipate water intrusion from conduits. Ask your installer to double check."]
+};
+
+const DEFAULT_TEMPLATE =
+`Hi [Name],
+
+Thanks again for choosing BinMaster for your state-of-the-art level measurement system. Looking ahead to your system, we figure you could use some resources.
+
+[product links]
+
+[protips]
+Remember to bookmark https://support.binmaster.com/ if you need to chat, search our knowledge base, or contact BinMaster Tech.
+
+BinMaster Technical Support
+https://www.binmaster.com
+402-434-9102
+3435 Schworer Dr
+Lincoln, NE 68504`;
+
+let rows = SRC.map((d,i) => ({id:i, ...d}));
 let sel = new Set();
-let history = JSON.parse(localStorage.getItem('bm_hist')||'[]');
+let history = [];
+try { history = JSON.parse(localStorage.getItem('bm_hist') || '[]'); } catch(e){}
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function uniqueProds(){
+  const seen = new Set(), out = [];
+  rows.forEach(r => {
+    r.product.trim().split(',').map(p=>p.trim()).filter(Boolean).forEach(p => {
+      if(!seen.has(p)){ seen.add(p); out.push(p); }
+    });
+  });
+  return out.sort((a,b) => a.localeCompare(b));
+}
+
+function rowsForProduct(p){
+  return rows
+    .filter(r => r.product.trim().split(',').map(x=>x.trim()).includes(p))
+    .map(r => r.id);
+}
+
+function activeProducts(){
+  return [...document.querySelectorAll('.pb.on')].map(b => b.dataset.p);
+}
+
+function buildProtips(){
+  const seen = new Set(), tips = [];
+  activeProducts().forEach(p => {
+    (PROTIPS[p] || []).forEach(t => { if(!seen.has(t)){ seen.add(t); tips.push(t); } });
+  });
+  return tips;
+}
 
 function renderBtns(){
-  layoutRows.forEach((row, i) => {
-    const container = document.getElementById(`row${i+1}`);
-    container.innerHTML = '';
-    row.forEach(p => {
-      const b = document.createElement('button');
-      b.className = 'pb'; b.textContent = p; b.dataset.p = p;
-      b.onclick = () => toggleProd(p);
-      container.appendChild(b);
-    });
+  const g = document.getElementById('btnGrid');
+  g.innerHTML = '';
+  uniqueProds().forEach(p => {
+    const b = document.createElement('button');
+    b.className = 'pb';
+    b.textContent = p;
+    b.dataset.p = p;
+    b.onclick = () => toggleProd(p);
+    g.appendChild(b);
   });
   syncBtns();
 }
 
 function toggleProd(p){
-  const ids = rows.filter(r => r.product === p).map(r => r.id);
+  const ids = rowsForProduct(p);
   const allOn = ids.length > 0 && ids.every(id => sel.has(id));
   ids.forEach(id => allOn ? sel.delete(id) : sel.add(id));
-  syncBtns(); renderSel(); refreshPreview();
+  syncBtns();
+  renderSel();
+  refreshPreview();
 }
 
 function syncBtns(){
-  document.querySelectorAll('.pb[data-p]').forEach(b => {
-    const p = b.dataset.p;
-    const ids = rows.filter(r => r.product === p).map(r => r.id);
+  document.querySelectorAll('.pb').forEach(b => {
+    const ids = rowsForProduct(b.dataset.p);
     b.classList.toggle('on', ids.length > 0 && ids.every(id => sel.has(id)));
   });
 }
 
-function renderTable(){
-  const tbody = document.getElementById('tableBody');
-  tbody.innerHTML = rows.map(r => `
-    <tr>
-      <td><input value="${r.product}" onchange="updateRow(${r.id}, 'product', this.value)"></td>
-      <td><input value="${r.name}" onchange="updateRow(${r.id}, 'name', this.value)"></td>
-      <td><input value="${r.url}" onchange="updateRow(${r.id}, 'url', this.value)"></td>
-      <td><button class="sx" onclick="deleteRow(${r.id})">✕</button></td>
-    </tr>`).join('');
-}
-
-function updateRow(id, field, val){
-  const r = rows.find(x => x.id === id);
-  if(r) r[field] = val;
+function clearSel(){
+  sel.clear();
+  syncBtns();
+  renderSel();
   refreshPreview();
-}
-
-function addRow(){
-  const newId = rows.length ? Math.max(...rows.map(r=>r.id)) + 1 : 0;
-  rows.push({id: newId, product:"", name:"", url:""});
-  renderTable();
-}
-
-function deleteRow(id){
-  rows = rows.filter(r => r.id !== id);
-  sel.delete(id);
-  renderTable(); renderSel(); syncBtns(); refreshPreview();
 }
 
 function renderSel(){
   const ul = document.getElementById('selList');
   const items = rows.filter(r => sel.has(r.id));
   document.getElementById('selBadge').textContent = items.length;
-  ul.innerHTML = items.map(r => `<li><span style="flex:1">> ${r.name}</span><button class="sx" onclick="removeSel(${r.id})">✕</button></li>`).join('');
+  if(!items.length){
+    ul.innerHTML = '<li><span class="emsg">No links selected yet</span></li>';
+    return;
+  }
+  ul.innerHTML = items.map(r => `
+    <li>
+      <div style="flex:1;min-width:0">
+        <div class="slbl"><a href="${esc(r.url)}" target="_blank">${esc(r.name)}</a></div>
+        <div class="ssub">${esc(r.product)}</div>
+      </div>
+      <button class="sx" onclick="deselRow(${r.id})" title="Remove">✕</button>
+    </li>`).join('');
 }
 
-function removeSel(id){ sel.delete(id); syncBtns(); renderSel(); refreshPreview(); }
+function deselRow(id){
+  sel.delete(id);
+  syncBtns();
+  renderSel();
+  refreshPreview();
+}
+
+function resetTemplate(){
+  document.getElementById('emailTemplate').value = DEFAULT_TEMPLATE;
+  refreshPreview();
+}
+
+function insertToken(token){
+  const ta = document.getElementById('emailTemplate');
+  const start = ta.selectionStart;
+  const end   = ta.selectionEnd;
+  const val   = ta.value;
+  ta.value = val.substring(0, start) + token + val.substring(end);
+  ta.selectionStart = ta.selectionEnd = start + token.length;
+  ta.focus();
+  refreshPreview();
+}
 
 function refreshPreview(){
-  const name = document.getElementById('emailName').value || '[Name]';
-  const items = rows.filter(r => sel.has(r.id));
-  const linkHtml = items.map(r => `> <a href="${r.url}">${r.name}</a>`).join('\n');
-  
-  document.getElementById('preview').innerHTML = `Hi ${name},\n\nThanks for choosing BinMaster. Here are the resources for your system:\n\n${linkHtml}\n\nBinMaster Technical Support`;
+  const email    = document.getElementById('emailAddr').value.trim();
+  const name     = document.getElementById('emailName').value.trim();
+  const ord      = document.getElementById('ordNum').value.trim();
+  const template = document.getElementById('emailTemplate').value;
+  const items    = rows.filter(r => sel.has(r.id));
+  const prods    = activeProducts().join(', ');
+  const tips     = buildProtips();
+
+  const linkLinesHtml = items.length
+    ? items.map(r => `  <a href="${esc(r.url)}" target="_blank">${esc(r.name)}</a>`).join('\n')
+    : '  <em style="color:var(--g400)">[no links selected]</em>';
+
+  const protipHtml = tips.length
+    ? tips.map(t => `💡 <strong>Protip:</strong> ${esc(t)}`).join('\n')
+    : '';
+
+  let html = esc(template)
+    .replace(/\[Name\]/g,          `<strong>${esc(name) || '[Name]'}</strong>`)
+    .replace(/\[ORD Number\]/g,    `<strong>${esc(ord)  || '[ORD Number]'}</strong>`)
+    .replace(/\[email\]/g,         `<strong>${esc(email)|| '[email]'}</strong>`)
+    .replace(/\[products\]/g,      `<strong>${esc(prods)|| '[products]'}</strong>`)
+    .replace(/\[product links\]/g, linkLinesHtml)
+    .replace(/\[protips\]/g,       protipHtml);
+
+  document.getElementById('preview').innerHTML = html;
 }
 
 function generate(){
-  const ord = document.getElementById('ordNum').value;
-  if(history.some(h => h.ord === ord)) {
-    document.getElementById('dupModalMsg').textContent = `ORD ${ord} was already sent.`;
+  const ord   = document.getElementById('ordNum').value.trim();
+  const email = document.getElementById('emailAddr').value.trim();
+  const name  = document.getElementById('emailName').value.trim();
+  if(!ord || !email || !name){ alert('Please fill in ORD Number, Email Address, and Name.'); return; }
+  if(!email.includes('@')){ alert('Please enter a valid email address.'); return; }
+  if(sel.size === 0){ alert('Please select at least one product link.'); return; }
+  const dup = history.some(h => h.ord.toLowerCase() === ord.toLowerCase());
+  if(dup){
+    const prev = history.find(h => h.ord.toLowerCase() === ord.toLowerCase());
+    document.getElementById('dupModalMsg').textContent =
+      `ORD Number "${ord}" was previously sent on ${prev.date}. Send again?`;
     document.getElementById('dupModal').classList.add('open');
-  } else { doGenerate(); }
+    return;
+  }
+  doGenerate();
 }
 
 function doGenerate(){
   closeModal();
-  const ord = document.getElementById('ordNum').value;
-  const email = document.getElementById('emailAddr').value;
-  const name = document.getElementById('emailName').value;
-  const items = rows.filter(r => sel.has(r.id));
-  const body = `Hi ${name},\n\nResources:\n${items.map(r=>`> ${r.name}: ${r.url}`).join('\n')}`;
-  
-  window.location.href = `mailto:${email}?subject=BinMaster Prep ${ord}&body=${encodeURIComponent(body)}`;
-  history.push({ord, email, date: new Date().toLocaleDateString()});
-  localStorage.setItem('bm_hist', JSON.stringify(history));
+  const ord      = document.getElementById('ordNum').value.trim();
+  const email    = document.getElementById('emailAddr').value.trim();
+  const name     = document.getElementById('emailName').value.trim();
+  const template = document.getElementById('emailTemplate').value;
+  const items    = rows.filter(r => sel.has(r.id));
+  const prods    = activeProducts().join(', ');
+  const tips     = buildProtips();
+
+  const linkLines  = items.map(r => `  ${r.name}: ${r.url}`).join('\r\n');
+  const protipText = tips.map(t => `Protip: ${t}`).join('\r\n');
+
+  const body = template
+    .replace(/\[Name\]/g,          name)
+    .replace(/\[ORD Number\]/g,    ord)
+    .replace(/\[email\]/g,         email)
+    .replace(/\[products\]/g,      prods)
+    .replace(/\[product links\]/g, linkLines)
+    .replace(/\[protips\]/g,       protipText)
+    .replace(/\n/g, '\r\n');
+
+  const subject = `BinMaster Preparation ${ord}`;
+  window.location.href = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  const date = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  history.push({ord, email, date});
+  try { localStorage.setItem('bm_hist', JSON.stringify(history)); } catch(e){}
   renderHist();
+  checkDup();
 }
 
 function closeModal(){ document.getElementById('dupModal').classList.remove('open'); }
-function clearSel(){ sel.clear(); syncBtns(); renderSel(); refreshPreview(); }
-function clearHist(){ history=[]; localStorage.setItem('bm_hist', '[]'); renderHist(); }
 
-function renderHist(){
-  document.getElementById('histList').innerHTML = history.map(h => `<li><b>${h.ord}</b>: ${h.email}</li>`).join('');
+function checkDup(){
+  const ord = document.getElementById('ordNum').value.trim();
+  const dup = ord && history.some(h => h.ord.toLowerCase() === ord.toLowerCase());
+  document.getElementById('ordNum').classList.toggle('warn', dup);
+  document.getElementById('dupMsg').classList.toggle('show', dup);
+  refreshPreview();
 }
 
-renderBtns(); renderTable(); renderSel(); renderHist(); refreshPreview();
+function renderHist(){
+  const ul = document.getElementById('histList');
+  if(!history.length){
+    ul.innerHTML = '<li><span class="emsg" style="color:var(--g400);font-style:italic;font-size:.82rem;text-align:center;display:block;padding:14px 0">No emails sent yet</span></li>';
+    return;
+  }
+  ul.innerHTML = history.slice().reverse().map((h, ri) => {
+    const i = history.length - 1 - ri;
+    return `<li>
+      <span class="ho">${esc(h.ord)}</span>
+      <span class="he">${esc(h.email)}</span>
+      <span class="hd">${esc(h.date)}</span>
+      <button class="hdel" onclick="delHist(${i})" title="Remove">✕</button>
+    </li>`;
+  }).join('');
+}
+
+function delHist(i){
+  history.splice(i, 1);
+  try { localStorage.setItem('bm_hist', JSON.stringify(history)); } catch(e){}
+  renderHist();
+}
+
+function clearHist(){
+  if(confirm('Clear all sent history?')){
+    history = [];
+    try { localStorage.setItem('bm_hist', '[]'); } catch(e){}
+    renderHist();
+  }
+}
+
+document.getElementById('emailTemplate').value = DEFAULT_TEMPLATE;
+renderBtns();
+renderSel();
+renderHist();
+refreshPreview();
 </script>
 </body>
 </html>
