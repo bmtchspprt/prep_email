@@ -121,10 +121,8 @@ td[contenteditable=true]:focus{outline:2px solid var(--red);outline-offset:-2px;
 
 <div class="layout">
 
-  <!-- LEFT COLUMN -->
   <div style="display:flex;flex-direction:column;gap:18px">
 
-    <!-- Recipient Info -->
     <div class="card">
       <div class="ch">📋 Recipient Information</div>
       <div class="cb">
@@ -146,7 +144,6 @@ td[contenteditable=true]:focus{outline:2px solid var(--red);outline-offset:-2px;
       </div>
     </div>
 
-    <!-- Product Buttons -->
     <div class="card">
       <div class="ch">
         🏷 Quick-Select by Product
@@ -157,7 +154,6 @@ td[contenteditable=true]:focus{outline:2px solid var(--red);outline-offset:-2px;
       </div>
     </div>
 
-    <!-- Email Preview -->
     <div class="card">
       <div class="ch">👁 Email Preview <span style="font-weight:400;font-size:.75rem;opacity:.6;text-transform:none;letter-spacing:0">(plain text — exactly what will be sent)</span></div>
       <div class="cb" style="padding:16px 20px">
@@ -165,7 +161,6 @@ td[contenteditable=true]:focus{outline:2px solid var(--red);outline-offset:-2px;
       </div>
     </div>
 
-    <!-- Product Links Table — below preview -->
     <div class="card">
       <div class="ch">📎 Product Links <span style="font-weight:400;font-size:.75rem;opacity:.6;text-transform:none;letter-spacing:0">(edit products.json to make permanent changes)</span></div>
       <div class="twrap">
@@ -194,10 +189,8 @@ td[contenteditable=true]:focus{outline:2px solid var(--red);outline-offset:-2px;
 
   </div>
 
-  <!-- RIGHT SIDEBAR -->
   <div class="sidebar">
 
-    <!-- Selected Links -->
     <div class="card">
       <div class="ch">
         ✅ Selected Links
@@ -208,7 +201,6 @@ td[contenteditable=true]:focus{outline:2px solid var(--red);outline-offset:-2px;
       </div>
     </div>
 
-    <!-- Generate -->
     <div class="card">
       <div class="ch">📧 Generate</div>
       <div class="cb">
@@ -217,7 +209,6 @@ td[contenteditable=true]:focus{outline:2px solid var(--red);outline-offset:-2px;
       </div>
     </div>
 
-    <!-- Email Template Editor -->
     <div class="card">
       <div class="ch">✏️ Email Template</div>
       <div class="cb">
@@ -236,7 +227,6 @@ td[contenteditable=true]:focus{outline:2px solid var(--red);outline-offset:-2px;
       </div>
     </div>
 
-    <!-- Sent History -->
     <div class="card">
       <div class="ch">
         🕐 Sent History
@@ -355,7 +345,7 @@ async function loadProducts() {
     note.className = 'load-note';
     initData(data);
   } catch(e) {
-    note.textContent = '⚠ products.json not found (' + e.message + ') — using built-in data. Add products.json to your repo to override.';
+    note.textContent = '⚠ products.json not found (' + e.message + ') — using built-in data.';
     note.className = 'load-note err';
     initData(BUILTIN);
   }
@@ -510,7 +500,9 @@ function insertToken(token){
   ta.focus(); refreshPreview();
 }
 
-function refreshPreview(){ document.getElementById('preview').textContent=buildBody('\n'); }
+function refreshPreview(){
+  document.getElementById('preview').textContent = buildBody('\n');
+}
 
 function generate(){
   const ord=document.getElementById('ordNum').value.trim();
@@ -533,9 +525,17 @@ function doGenerate(){
   closeModal();
   const ord=document.getElementById('ordNum').value.trim();
   const email=document.getElementById('emailAddr').value.trim();
-  const body=buildBody('\r\n');
-  const subject='BinMaster Preparation '+ord;
-  window.location.href='mailto:'+encodeURIComponent(email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  // Build body with \n, then encode each line separately and join with %0A
+  // This is the most reliable way to get line breaks in Outlook via mailto
+  const rawBody = buildBody('\n');
+  const subject = 'BinMaster Preparation ' + ord;
+  const encodedBody = rawBody
+    .split('\n')
+    .map(line => encodeURIComponent(line))
+    .join('%0A');
+  window.location.href = 'mailto:' + encodeURIComponent(email) +
+    '?subject=' + encodeURIComponent(subject) +
+    '&body=' + encodedBody;
   const date=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
   history.push({ord,email,date});
   try{ localStorage.setItem('bm_hist',JSON.stringify(history)); }catch(e){}
